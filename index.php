@@ -29,9 +29,11 @@
  
       $ext = strtolower(substr($_FILES['fileUpload']['name'],-4)); //Pegando extensão do arquivo
       $new_name = 'teste' . $ext; //Definindo um novo nome para o arquivo
-      $dir = 'uploads/'; //Diretório para uploads
+      $env_var = getenv('OPENSHIFT_DATA_DIR') .'/'. $new_name;
+      //$dir = 'uploads/'; //Diretório para uploads
  
-      move_uploaded_file($_FILES['fileUpload']['tmp_name'], $dir.$new_name); //Fazer upload do arquivo
+      //move_uploaded_file($_FILES['fileUpload']['tmp_name'], $dir.$new_name); //Fazer upload do arquivo
+      move_uploaded_file($_FILES['fileUpload']['tmp_name'], $env_var); //Fazer upload do arquivo
    }
    $env_var = getenv('OPENSHIFT_DATA_DIR');
    echo $env_var;
