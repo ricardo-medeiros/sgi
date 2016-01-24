@@ -33,7 +33,10 @@
     if (isset($_POST['submit'])) {
 
         if($_FILES['image']['type'] == "image/png"){
-            move_uploaded_file($_FILES['image']['tmp_name'], getenv('OPENSHIFT_DATA_DIR') . "/" . $_FILES['image']['name']);
+        	$arquivo = getenv('OPENSHIFT_DATA_DIR') . "/" . $_FILES['image']['name'];
+        	echo $arquivo;
+            //move_uploaded_file($_FILES['image']['tmp_name'], getenv('OPENSHIFT_DATA_DIR') . "/" . $_FILES['image']['name']);
+        	move_uploaded_file($_FILES['image']['tmp_name'], $arquivo);
         }else{
             $message="error";
 
