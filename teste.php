@@ -22,7 +22,7 @@
     }
     ?>
 
-<form action="<?php htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" enctype="multipart/form-data">
+<form action="#" method="post" enctype="multipart/form-data">
 
         <table align="center">
             <tr>
