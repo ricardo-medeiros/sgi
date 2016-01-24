@@ -6,7 +6,21 @@
 </head>
 <body>
 
+   <?php
 
+    $message="";
+    if (isset($_POST['submit'])) {
+    	$arquivo = getenv('OPENSHIFT_DATA_DIR') . "/" . $_FILES['image']['name'];
+    	echo $arquivo;
+        if($_FILES['image']['type'] == "image/png"){        	
+            //move_uploaded_file($_FILES['image']['tmp_name'], getenv('OPENSHIFT_DATA_DIR') . "/" . $_FILES['image']['name']);
+        	move_uploaded_file($_FILES['image']['tmp_name'], $arquivo);
+        }else{
+            $message="error";
+
+        }
+    }
+    ?>
 
 <form action="<?php htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" enctype="multipart/form-data">
 
@@ -31,10 +45,9 @@
 
     $message="";
     if (isset($_POST['submit'])) {
-
-        if($_FILES['image']['type'] == "image/png"){
-        	$arquivo = getenv('OPENSHIFT_DATA_DIR') . "/" . $_FILES['image']['name'];
-        	echo $arquivo;
+    	$arquivo = getenv('OPENSHIFT_DATA_DIR') . "/" . $_FILES['image']['name'];
+    	echo $arquivo;
+        if($_FILES['image']['type'] == "image/png"){        	
             //move_uploaded_file($_FILES['image']['tmp_name'], getenv('OPENSHIFT_DATA_DIR') . "/" . $_FILES['image']['name']);
         	move_uploaded_file($_FILES['image']['tmp_name'], $arquivo);
         }else{
