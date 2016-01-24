@@ -10,15 +10,15 @@
 
     $message="";
     if (isset($_POST['submit'])) {
-    	$arquivo = getenv('OPENSHIFT_DATA_DIR') . "/" . $_FILES['image']['name'];
+    	$arquivo = getenv('OPENSHIFT_DATA_DIR')  . $_FILES['file']['name'];
     	echo $arquivo;
-        if($_FILES['image']['type'] == "image/png"){        	
+        //if($_FILES['image']['type'] == "image/png"){        	
             //move_uploaded_file($_FILES['image']['tmp_name'], getenv('OPENSHIFT_DATA_DIR') . "/" . $_FILES['image']['name']);
-        	move_uploaded_file($_FILES['image']['tmp_name'], $arquivo);
-        }else{
+        	move_uploaded_file($_FILES['file']['tmp_name'], $arquivo);
+        //}else{
             $message="error";
 
-        }
+       // }
     }
     ?>
 
@@ -45,14 +45,15 @@
 
     $message="";
     if (isset($_POST['submit'])) {
-    	$arquivo = getenv('OPENSHIFT_DATA_DIR') . "/" . $_FILES['image']['name'];
+    	//$new_name = 'teste.jpg';
+    	$arquivo = getenv('OPENSHIFT_DATA_DIR') . $_FILES['file']['name'];
     	echo $arquivo;
-        if($_FILES['image']['type'] == "image/png"){        	
+        //if($_FILES['file']['type'] == "image/png"){        	
             //move_uploaded_file($_FILES['image']['tmp_name'], getenv('OPENSHIFT_DATA_DIR') . "/" . $_FILES['image']['name']);
         	move_uploaded_file($_FILES['image']['tmp_name'], $arquivo);
-        }else{
-            $message="error";
+        //}else{
+        //    $message="error";
 
-        }
+        //}
     }
     ?>
