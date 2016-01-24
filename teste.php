@@ -6,19 +6,7 @@
 </head>
 <body>
 
-    <?php
 
-    $message="";
-    if (isset($_POST['submit'])) {
-
-        if($_FILES['image']['type'] == "image/png"){
-            move_uploaded_file($_FILES['image']['tmp_name'], getenv('OPENSHIFT_DATA_DIR') . "/" . $_FILES['image']['name']);
-        }else{
-            $message="error";
-
-        }
-    }
-    ?>
 
 <form action="<?php htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" enctype="multipart/form-data">
 
@@ -38,3 +26,17 @@
     <p><?php echo $message;  ?></p>
 </body>
 </html>
+
+    <?php
+
+    $message="";
+    if (isset($_POST['submit'])) {
+
+        if($_FILES['image']['type'] == "image/png"){
+            move_uploaded_file($_FILES['image']['tmp_name'], getenv('OPENSHIFT_DATA_DIR') . "/" . $_FILES['image']['name']);
+        }else{
+            $message="error";
+
+        }
+    }
+    ?>
