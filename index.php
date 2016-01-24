@@ -34,7 +34,9 @@
  
       //move_uploaded_file($_FILES['fileUpload']['tmp_name'], $dir.$new_name); //Fazer upload do arquivo
       move_uploaded_file($_FILES['fileUpload']['tmp_name'], $env_var); //Fazer upload do arquivo
+      echo $env_var .'<br/>';
+      echo ($_SERVER['REQUEST_URI']);
    }
-   $env_var = getenv('OPENSHIFT_DATA_DIR');
-   echo $env_var;
+   //$env_var = getenv('OPENSHIFT_DATA_DIR');
+   
 ?>
