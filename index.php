@@ -38,7 +38,7 @@
 		</nav>
 	</div>
 	<!-- Login-->
-	<div style="margin-top: 200px;" id="loginModal" tabindex="-1"
+	<div style="margin-top: 100px;" id="loginModal" tabindex="-1"
 		role="dialog" aria-labelledby="myModalLabel">
 		<div class="modal-dialog modal-sm" role="document">
 			<div class="modal-content">
@@ -49,7 +49,7 @@
 					<h4 class="modal-title" id="myModalLabel">SGI - Login</h4>
 				</div>
 				<div class="modal-body">
-					<form name='f' action="/sgi/controle/login.controller.php" method='POST' data-toggle="validator"
+					<form name='f' action="controle/login.controller.php" method='POST' data-toggle="validator"
 						role="form">
 						<div class="form-group">
 							<label for="usuario" class="control-label">Login:</label> <input
@@ -113,44 +113,3 @@
 	</div>
 </body>
 </html>
-
-<!-- 
-<html>
-<head>
-    <meta charset="ISO-8859-1" http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-<body> 
-
-<?php
-	echo '<h1>Ola Mundo!</h1><br/><br/>';
-?>
-
-<form action="#" method="post" enctype="multipart/form-data">
-    <p>
-        Upload a new photo to the server:<br/><br/><br/>
-        <input type="file" name="fileUpload"/><br/><br/>
-        <input type="submit" value="Upload photo"/>
-    </p>
-</form>
-
-</body>
-</head>
-</html>
-
-<?php
-   if(isset($_FILES['fileUpload']))
-   {
-      //date_default_timezone_set("Brazil/East"); //Definindo timezone padrão
- 
-      $ext = strtolower(substr($_FILES['fileUpload']['name'],-4)); //Pegando extensão do arquivo
-      $new_name = 'teste' . $ext; //Definindo um novo nome para o arquivo
-      $env_var = getenv('OPENSHIFT_DATA_DIR') ."uploads/". $new_name;
-      //$dir = 'uploads/'; //Diretório para uploads
- 
-      //move_uploaded_file($_FILES['fileUpload']['tmp_name'], $dir.$new_name); //Fazer upload do arquivo
-      move_uploaded_file($_FILES['fileUpload']['tmp_name'], $env_var); //Fazer upload do arquivo
-      echo $env_var .'<br/>';
-      echo ($_SERVER['REQUEST_URI']);
-   }
-   //$env_var = getenv('OPENSHIFT_DATA_DIR');
-   
-?>-->
