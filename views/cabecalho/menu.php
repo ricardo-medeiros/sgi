@@ -22,30 +22,51 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 </head>
 <body>
-  <div id="menu">
-        <nav class="navbar navbar-inverse">
-          <div class="container-fluid">
-            <div class="navbar-header">
-              <a class="navbar-brand" href="#">SGI-WEB</a><br/><br/>
-            </div>
-            <ul class="nav navbar-nav">
-              <li class="active"><a href="http://localhost:90/sgi/views/site/principal.php">Home</a></li>
-              <li><a href="http://localhost:90/sgi/views/site/professor.php">Professor</a></li>
-              <li><a href="http://localhost:90/sgi/views/site/aluno.php">Aluno</a></li> 
-              <li><a href="http://localhost:90/sgi/views/site/turma.php">Turma</a></li>
-              <li><a href="http://localhost:90/sgi/controle/logout.controller.php">Sair</a></li>  
-            </ul>
-          </div>
-          <div class="collapse navbar-collapse">
-	         <ul class="nav navbar-nav">
-	      	   <li style="color: white; font-size: 11px;">Corretor(a): <?php echo $nome ?></li>
-	         </ul>
-	      </div>
-        </nav>
-    </div>    
+	<div class="navbar navbar-inverse navbar-fixed-top">
+	  <div class="container">
+	    <div class="navbar-header">
+	      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	      </button>
+	      <a class="navbar-brand" href="#">
+	      	<span aria-hidden="true">SGI-WEB</span>
+	      </a>
+	    </div>
+	    <div class="collapse navbar-collapse">
+	      <ul class="nav navbar-nav">
+	        <li><a href="principal.php">Inicio</a></li>
+	        <li class="menu-item dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Cadastros<b class="caret"></b></a>
+	        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+	        	<li class="menu-item "><a href="usuario.php">Usuarios</a></li>
+	            <li class="menu-item "><a href="cliente.php">Clientes</a></li>
+	            <li class="menu-item "><a href="imoveis.php">Imoveis</a></li>
+	            <li class="menu-item "><a href="proprietario.php">Proprietarios</a></li>            
+	        </ul>
+	        <li><a href="contrato.php">Contratos</a></li>
+	        <li><a href="financeiro.php">Financeiro</a></li>
+	        <li class="menu-item dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Relatorios<b class="caret"></b></a>
+	        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+	            <li class="menu-item "><a href="cliente.php">Clientes</a></li>
+	            <li class="menu-item "><a href="imoveis.php">Imoveis</a></li>
+	            <li class="menu-item "><a href="proprietario.php">Proprietarios</a></li>            
+	        </ul>      
+	        <li><a href="<?=$_SESSION["LOGOUT"]?>">Sair</a></li>
+	      </ul>
+	    </div><!--/.nav-collapse -->
+	    <div class="collapse navbar-collapse">
+	       <ul class="nav navbar-nav">
+	      	 <li style="color: white; font-size: 11px;">Corretor(a): <?php echo $nome ?></li>
+	       </ul>
+	    </div>
+	  </div>
+	</div>     
 </body>
+</html>

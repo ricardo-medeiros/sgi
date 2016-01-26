@@ -15,10 +15,8 @@
                 include("../cabecalho/menu.php");
             ?>
         </div>
-        <div id="corpo">
-            <?php
-            echo "<h5><p align='center'>Bem vindo ao Sistema de Gerenciamento de Imoveis (SGI-WEB)</p></h5>";
-            ?>
+        <div id="corpo" class="container" style="padding-top: 80px">
+            
         </div>
         <div id="rodape">
             <?php

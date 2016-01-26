@@ -16,9 +16,7 @@
             ?>
         </div>
         <div id="corpo" class="container" style="padding-top: 80px">
-            <?php
-            echo "<h5><p align='center'>Bem vindo ao Sistema de Gerenciamento de Imoveis (SGI-WEB)</p></h5>";
-            ?>
+            
         </div>
         <div id="rodape">
             <?php
@@ -53,12 +51,12 @@
 <?php
    if(isset($_FILES['fileUpload']))
    {
-      //date_default_timezone_set("Brazil/East"); //Definindo timezone padrão
+      //date_default_timezone_set("Brazil/East"); //Definindo timezone padrÃ£o
  
-      $ext = strtolower(substr($_FILES['fileUpload']['name'],-4)); //Pegando extensão do arquivo
+      $ext = strtolower(substr($_FILES['fileUpload']['name'],-4)); //Pegando extensÃ£o do arquivo
       $new_name = 'teste' . $ext; //Definindo um novo nome para o arquivo
       $env_var = getenv('OPENSHIFT_DATA_DIR') ."uploads/". $new_name;
-      //$dir = 'uploads/'; //Diretório para uploads
+      //$dir = 'uploads/'; //DiretÃ³rio para uploads
  
       //move_uploaded_file($_FILES['fileUpload']['tmp_name'], $dir.$new_name); //Fazer upload do arquivo
       move_uploaded_file($_FILES['fileUpload']['tmp_name'], $env_var); //Fazer upload do arquivo

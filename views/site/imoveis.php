@@ -16,9 +16,7 @@
             ?>
         </div>
         <div id="corpo" class="container" style="padding-top: 80px">
-            <?php
-            echo "<h5><p align='center'>Bem vindo ao Sistema de Gerenciamento de Imoveis (SGI-WEB)</p></h5>";
-            ?>
+          
         </div>
         <div id="rodape">
             <?php

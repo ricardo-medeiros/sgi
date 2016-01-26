@@ -1,6 +1,7 @@
 <?php
 	session_start();
+	$INDEX = $_SESSION["INDEX"];
 	session_unset();
 	session_destroy();
-	header("Location: http://localhost:90/sgi/index.php");
+	header('Location: ' .$INDEX);
 ?>
