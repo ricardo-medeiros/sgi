@@ -40,7 +40,7 @@
 		<table style="font-size: 12px;">
 			  <tr>
 			    <td style="vertical-align: top;">
-			    	<a href="#"><button type="button" class="btn btn-success" data-dismiss="modal">Novo</button></a>&nbsp;
+			    	<a href="cadCliente.php?tipo=INS"><button type="button" class="btn btn-success" data-dismiss="modal">Novo</button></a>&nbsp;
 			    </td>
 				<td>							
 					<table id="tbcliente" class="table table-bordered table-hover table-striped" cellspacing="0" width="100%">
