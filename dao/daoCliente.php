@@ -1,6 +1,7 @@
 <?php 
-	require_once "../modelo/cliente.model.php";
-	require_once "../dao/conexao.php";
+	require_once(__ROOT__.'/modelo/cliente.model.php');
+	require_once(__ROOT__.'/dao/conexao.php');
+	require_once(__ROOT__.'/dao/daoCliente.php');
 		
 class daoCliente{
 	

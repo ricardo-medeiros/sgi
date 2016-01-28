@@ -1,6 +1,12 @@
-<?php 
-	$tipo = $_REQUEST["tipo"];
+<?php
+	define('__ROOT__',dirname(dirname(dirname(__FILE__))));
+	require_once(__ROOT__.'/controle/cliente.controle.php');
+	$tipo = $_REQUEST["tipo"];		
+	$controleCliente = new Cliente_Controle();
+	
 ?>
+<!DOCTYPE html>
+<html lang="en">
 <head>
 <title>Cadastro de Cliente</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -9,7 +15,9 @@
 <link rel="stylesheet"	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script type="text/javascript" language="javascript">
 
+</script>
 </head>
 <body style="margin: 0">
 	<div id="menu">
@@ -21,11 +29,8 @@
 		<div class="panel panel-primary">
 		  <div class="panel-heading" style="text-align:center;">Cadastro de Cliente</div>
 		  	<div class="panel-body">
-		  		<div class="text-center">
-				    <form action="#" method="post" class="form-horizontal" data-toggle="validator" role="form" id="form">
-					  <!-- <table border="1" style="width: 100%; font-size: 14px;"> -->
-<!-- 					  	<tr> -->
-<!-- 					  	   <td> -->
+		  		<div class="text-center">		  		
+				    <form action="/sgi/controle/interfaceCliente.php" method="post" class="form-horizontal" data-toggle="validator" role="form" id="form">
 							  <div class="form-group">
 							    <label for="cod" class="col-sm-2 control-label">Codigo</label>
 							    <div class="col-sm-1">
@@ -66,7 +71,7 @@
 							  </div>					  			  
 							  <div class="form-group">
 							    <label for="nascCliente" class="col-sm-2 control-label">Nascimento</label>
-							    <div class="col-sm-2">					      
+							    <div class="col-sm-3">					      
 							      <input required  type="date" maxlength="10" pattern="[0-9]{2}\/[0-9]{2}\/[0-9]{4}$" name="dataNasc" class="form-control" id="txtNasc" placeholder="Nascimento" value="#">
 							    </div>
 							    <span style="text-align: left" class="help-block">Formato: dd/mm/aaaa</span>
@@ -75,7 +80,7 @@
 								  <label for="statusUsuario" class="col-sm-2 control-label">Status</label>
 								  <div class="col-sm-2">
 									  <select class="form-control"  name="status">
-			<!-- 							<c:if test="${modo != 'ins'}"> -->
+											<?php if ($tipo != 'INS') {?> 
 			<!-- 						  		<c:if test="${funcionario.usuario.status == 'A'}"> -->
 										    	<option value="#">Ativo</option>
 										    	<option value="D">Desativado</option>					    	
@@ -84,31 +89,39 @@
 			<!-- 							    	<option value="${funcionario.usuario.status}">Desativado</option> -->
 			<!-- 							    	<option value="A">Ativo</option>					    	 -->
 			<!-- 							    </c:if>	 -->
-			<!-- 							 </c:if> -->
-			<!-- 						     <c:if test="${modo == 'ins'}">	 -->
-			<!-- 									<option value="A">Ativo</option> -->
-			<!-- 							    	<option value="D">Desativado</option>									   -->
-			<!-- 							  </c:if>	 -->
+ 											<?php }?>
+											<?php if ($tipo == 'INS') {?> 
+			 									<option value="A">Ativo</option> 
+			 							    	<option value="D">Desativado</option>									   
+											<?php }?>
 									  </select>
 								  </div>
 						  		</div>		
-<!-- 				  			</td> -->
-				  			<!-- <td style="vertical-align: top; width: 200px;"> -->
-				  				
-<!-- 				  			</td> -->
-<!-- 				  		  </tr> -->
-<!-- 				  		</table>  	   -->
+								<div class="form-group">
+								    <label for="enderecos" class="col-sm-2 control-label">Endereco</label>
+								    <div class="col-sm-2">					      
+								      <a href="#" id="usuModal" data-toggle="modal" data-target="#endereco-modal">
+								      		<button type="button" class="btn btn-primary" data-dismiss="modal">
+								      			<span class="glyphicon glyphicon-home" aria-hidden="true"></span> Visualizar							      		
+								      		</button>
+								      </a>
+								    </div>
+							   </div>	
 				  		<div>
-	<!-- 				    <c:if test="${modo == 'cns'}"> -->
+						<?php if ($tipo == 'CNS') {?> 
 					  		<a href="cliente.php"><button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button></a>
-	<!-- 					</c:if> -->
-	<!-- 					<c:if test="${modo != 'cns'}"> -->
-	<!-- 						<button type="submit" name="submit" class="btn btn-success">Salvar</button> -->
-	<!-- 				  		<a href="listaFuncionario"><button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button></a> -->
-	<!-- 					</c:if>		  	 -->
+ 						<?php }?>
+						<?php if ($tipo == 'INS') {?>
+	 						<button type="submit" id="salvar" name="salvar" class="btn btn-success" value="Salvar">Salvar</button> 
+	 				  		<a href="cliente.php"><button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button></a> 
+						<?php }?>
+						<?php if ($tipo == 'UPD') {?>
+	 						<button type="submit" id="alterar" name="alterar" class="btn btn-success" value="Alterar">Alterar</button> 
+	 				  		<a href="cliente.php"><button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button></a> 
+						<?php }?>
 				  		</div>
 				  		<input type="hidden" name="idCliente" value="#"></input>
-				  </form>
+				  </form>			  
 	 			</div>  
 			 </div>
 		  </div>
@@ -116,8 +129,140 @@
 	</div>
 	<div id="rodape">
 		<?php
-                include("../rodape/rodape.php");
+                //include("../rodape/rodape.php");
             ?>
 	</div> 
+	
+	<!-- Modal Endereco-->
+	<div class="modal fade" id="endereco-modal" tabindex="-1" role="dialog" 
+		aria-labelledby="modalLabel" style="margin-top: 80px;">
+		<div class="modal-dialog modal-sm" role="document" style="width:800px;">
+			<div class="modal-content">
+				<form action="#" method="POST" id="form2" class="form-horizontal" data-toggle="validator" role="form">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Fechar">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<h4 class="modal-title" id="modalLabel">Endereco do Cliente</h4>
+					</div>
+					<div class="modal-body">				
+						 <!-- <label class="control-label">Selecionar Arquivo</label><br/>
+						 <input required id="input-1" type="file" name="uploadFile" class="file" accept="image/gif, image/jpeg, image/png"> 
+						 <input type="hidden" id="txtPagina" name="txtPagina" /> -->
+						 <div class="form-group">
+						    <label for="cod" class="col-sm-2 control-label">Codigo</label>
+						    <div class="col-sm-1">
+						      <input type="text" name="idEndereco" value="" class="form-control" id="txtIdEndereco" placeholder="" disabled>
+						    </div>
+						 </div>		
+						 <div class="form-group">
+								<label for="cep" class="col-sm-2 control-label">CEP</label>
+								<div class="col-sm-2">
+									<input required maxlength="9" minlength="9" type="text" name="cep" class="form-control"
+										id="txtCep" placeholder="Cep" value="">
+								</div>
+								<span style="text-align: left" class="help-block">Formato: 00000-000</span>
+						 </div>
+						 <div class="form-group">
+								<label for="rua" class="col-sm-2 control-label">Rua</label>
+								<div class="col-sm-8">
+									<input  required maxlength="200" minlength="1" type="text" name="rua" value=""
+										class="form-control" id="txtRua" placeholder="Rua">
+								</div>
+						 </div>
+						 <div class="form-group">
+								<label for="bairroCliente" class="col-sm-2 control-label">Bairro</label>
+								<div class="col-sm-5">
+									<input  required maxlength="70" minlength="1" type="text" name="bairro" class="form-control"
+										id="txtBairro" placeholder="Bairro"
+										value="">
+								</div>
+						 </div>
+						 <div class="form-group">
+								<label for="cidadeCliente" class="col-sm-2 control-label">Cidade</label>
+								<div class="col-sm-5">
+									<input  required maxlength="50" minlength="1" type="text" name="cidade" class="form-control"
+										id="txtCidade" placeholder="Cidade"
+										value="">
+								</div>
+						 </div>
+						 <div class="form-group">
+								<label for="ufCliente" class="col-sm-2 control-label">Estado</label>
+								<div class="col-sm-4">
+									<select required name="uf" class="form-control" id="txtUf"
+										placeholder="UF" value="">
+			 							 <?php if ($tipo == 'INS') {?> 
+										    	<option value="#">Selecione</option>
+												<option value="ac">Acre</option> 
+												<option value="al">Alagoas</option> 
+												<option value="am">Amazonas</option> 
+												<option value="ap">Amapa</option> 
+												<option value="ba">Bahia</option> 
+												<option value="ce">Ceara</option> 
+												<option value="df">Distrito Federal</option> 
+												<option value="es">Espirito Santo</option> 
+												<option value="go">Goias</option> 
+												<option value="ma">Maranhao</option> 
+												<option value="mt">Mato Grosso</option> 
+												<option value="ms">Mato Grosso do Sul</option> 
+												<option value="mg">Minas Gerais</option> 
+												<option value="pa">Para</option> 
+												<option value="pb">Paraiba</option> 
+												<option value="pr">Parana</option> 
+												<option value="pe">Pernambuco</option> 
+												<option value="pi">Piaui</option> 
+												<option value="rj">Rio de Janeiro</option> 
+												<option value="rn">Rio Grande do Norte</option> 
+												<option value="ro">Rondonia</option> 
+												<option value="rs">Rio Grande do Sul</option> 
+												<option value="rr">Roraima</option> 
+												<option value="sc">Santa Catarina</option> 
+												<option value="se">Sergipe</option> 
+												<option value="sp">Sao Paulo</option> 
+												<option value="to">Tocantins</option> 					    	
+			 							 <?php } ?> 
+			 							 <?php if ($tipo != 'INS') {?> 
+										    	<option value="#">Selecione</option>
+												<option value="ac">Acre</option> 
+												<option value="al">Alagoas</option> 
+												<option value="am">Amazonas</option> 
+												<option value="ap">Amapa</option> 
+												<option value="ba">Bahia</option> 
+												<option value="ce">Ceara</option> 
+												<option value="df">Distrito Federal</option> 
+												<option value="es">Espirito Santo</option> 
+												<option value="go">Goias</option> 
+												<option value="ma">Maranhao</option> 
+												<option value="mt">Mato Grosso</option> 
+												<option value="ms">Mato Grosso do Sul</option> 
+												<option value="mg">Minas Gerais</option> 
+												<option value="pa">Para</option> 
+												<option value="pb">Paraiba</option> 
+												<option value="pr">Parana</option> 
+												<option value="pe">Pernambuco</option> 
+												<option value="pi">Piaui</option> 
+												<option value="rj">Rio de Janeiro</option> 
+												<option value="rn">Rio Grande do Norte</option> 
+												<option value="ro">Rondonia</option> 
+												<option value="rs">Rio Grande do Sul</option> 
+												<option value="rr">Roraima</option> 
+												<option value="sc">Santa Catarina</option> 
+												<option value="se">Sergipe</option> 
+												<option value="sp">Sao Paulo</option> 
+												<option value="to">Tocantins</option> 				    	
+			 							 <?php } ?> 
+									</select>
+								</div>
+						 </div> 				 
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-success" name="submit" id="i_submit">Salvar</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>	
 </body>
 </html>

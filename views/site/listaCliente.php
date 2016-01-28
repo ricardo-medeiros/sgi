@@ -4,7 +4,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Lista de Cardápios</title>
+<title>Lista de Clientes</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css"	href="https://cdn.datatables.net/1.10.8/css/dataTables.bootstrap.min.css">
 
@@ -15,6 +15,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 <script type="text/javascript">
 	var x;
+		
 	$(document).ready(function() {
 		$('#tbcliente').DataTable(
 			{
@@ -22,7 +23,7 @@
 					"url" : "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json"
 				},
 				"dom": "Bfrtip"
-			});	
+			});			
 	});
 	 
 	function Cliente(cliente){		
@@ -60,11 +61,11 @@
 							for ($i = 1; $i < 15; $i++){
 						 ?>
 								<tr>
-									<td align="center"><a href="#">
+									<td align="center"><a href="cadCliente.php?tipo=CNS">
 										 <span class="glyphicon glyphicon-search" aria-hidden="true" title="Consultar"></span>
 									</a></td>
 									<td align="center">
-									<a href="#">
+									<a href="cadCliente.php?tipo=CNS">
 										 <span class="glyphicon glyphicon-pencil" aria-hidden="true" title="Alterar"></span>
 									</a></td>
 									<td align="center">

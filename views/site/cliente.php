@@ -8,7 +8,11 @@
 <link rel="stylesheet"	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-
+<script type="text/javascript">
+	$(document).ready(function() {
+		
+	});
+</script>
 </head>
 <body style="margin: 0">
 	<div id="menu">
@@ -17,7 +21,8 @@
             ?>
 	</div>
 	<div id="lista">
-		<iframe src="listaCliente.php" style="display: block; border: none; height: 100vh; width: 100vw;"></iframe>
+		 <iframe src="listaCliente.php" id="cliente" style="display: block; border: none; height: 100vh; width: 100vw;"></iframe> 
+		 <!-- <object data="listaCliente.php" type="text/html" style="display: block; border: none; height: 100vh; width: 100vw;"></object> --> 
 	</div>
 	<div id="rodape">
 		<?php

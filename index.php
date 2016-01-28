@@ -1,3 +1,16 @@
+<?php
+	session_start();
+	$erro = '';
+	if(isset($_SESSION["erroLogin"]))
+	{
+		$erro = $_SESSION["erroLogin"];
+		session_unset();
+		session_destroy();
+	}
+	//require_once "dao/conexao.php";
+	//$dao = new conexao();
+	//$dao->conectar();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,14 +28,13 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script
 	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-<script>
-	$(document).ready(
+<script type="text/javascript">
+	$(document).ready(function() {
 
-	);
 
-	function limpaMsg() {
-		document.getElementById('msgEmail').innerText = "";
-		document.getElementById('msgLogin').innerText = "";
+	});
+	function limpaMsg(){
+		document.getElementById('txtEmail').value = '';
 	}
 </script>
 </head>
@@ -64,15 +76,32 @@
 								name='j_password' placeholder="Senha" />
 						</div>
 						<div class="modal-footer">
-							<label id="msgLogin" class="col-md-12" style="color: red;"></label>
+							<!-- <label id="msgLogin" class="col-md-12" style="color: red;"></label>-->
+							<?php if ($erro != ''){?>
+							  <div class="alert alert-danger">
+							    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+							    Login ou Senha invalidos.
+							  </div>
+							<?php }?>
 							<input type="submit" name="submit" class="btn btn-success"
 								value="Entrar" /> <br />
 							<br />
-							<div class="passwordRecoverLink col-md-12"
-								style="text-align: right;">
-								<a href="#" onclick="limpaMsg()" data-toggle="modal"
-									data-target="#envio-modal" data-dismiss="modal">Recuperar
-									Senha</a>
+							<div class="passwordRecoverLink col-md-15"
+								style="text-align: center;">
+								<table width="100%">
+									<tr>
+										<td align="left">
+											<a href="#" onclick="limpaMsg()" data-toggle="modal"
+												data-target="#cadastro-modal" data-dismiss="modal" style="font-size: 13px;">Cadastrar-se
+											</a>
+										</td>
+										<td align="right">
+											<a href="#" onclick="limpaMsg()" data-toggle="modal"
+												data-target="#envio-modal" data-dismiss="modal" style="font-size: 13px;">Recuperar Senha
+											</a>
+										</td>
+									</tr>
+								</table>
 							</div>
 						</div>
 					</form>
@@ -111,5 +140,36 @@
 			</div>
 		</div>
 	</div>
+	<!-- Modal Cadastra-se -->
+	<div class="modal fade" id="cadastro-modal" tabindex="-1" role="dialog"
+		aria-labelledby="modalLabel">
+		<div class="modal-dialog modal-sm" role="document">
+			<div class="modal-content">
+				<form action="#" method="POST" data-toggle="validator" role="form">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Fechar">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<h4 class="modal-title" id="modalLabel">Cadastrar Corretor(a)</h4>
+					</div>
+					<div class="modal-body">
+						<div class="form-group">
+							<label for="email" class="control-label">E-mail:</label> <input
+								required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+								id="txtEmailCadastro" name="txtEmailCadastro" type="email"
+								placeholder="Digite seu E-mail" class="form-control">
+						</div>
+					</div>
+					<div class="modal-footer">
+						<label id="msgEmailCadastro" style="color: blue;"></label><br /> <input
+							type="submit" name="submit" class="btn btn-success"
+							value="Enviar" />
+						<button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>	
 </body>
 </html>
