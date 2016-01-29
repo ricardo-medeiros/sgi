@@ -11,9 +11,9 @@
 </head>
 
 <body>
-    <div id="rodape" style="position: absolute; bottom: 0;width: 100%;">
+    <div id="rodape" style="position: absolute; bottom: 0;width: 100%; font-weight: bold;">
     <?php
-        echo "<p align='center'>SGI-WEB - Versao 1.0 - Produzido por Ricardo Medeiros</p>";
+        echo "<p align='center' style='font-size:10px;font-weight: bold' >SGI-WEB - Versao 1.0 - Produzido por Ricardo Medeiros</p>";
     ?>
   </div>
 </body>

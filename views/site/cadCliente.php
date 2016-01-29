@@ -2,8 +2,8 @@
 	define('__ROOT__',dirname(dirname(dirname(__FILE__))));
 	require_once(__ROOT__.'/controle/cliente.controle.php');
 	$tipo = $_REQUEST["tipo"];		
-	$controleCliente = new Cliente_Controle();
-	
+	$controleCliente = new Cliente_Controle();	
+	$lista = $controleCliente->listaCliente();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -22,7 +22,7 @@
 <body style="margin: 0">
 	<div id="menu">
 		<?php
-                include("../cabecalho/menu.php");
+               // include("../cabecalho/menu.php");
             ?>
 	</div>
 	<div id="corpo" class="container" style="margin-top: 80px; width: 85%;">
@@ -36,6 +36,16 @@
 							    <div class="col-sm-1">
 							      <input type="text" name="cliente" value="" class="form-control" id="txtCodigo" placeholder="" disabled>
 							    </div>
+							    <?php if ($tipo != 'INS') {?> 
+							    	<label for="enderecos" class="col-sm-1 control-label">Endereco</label>
+								    <div class="col-sm-1">					      
+								      <a href="#" id="usuModal" data-toggle="modal" data-target="#endereco-modal">
+								      		<button type="button" class="btn btn-primary" data-dismiss="modal">
+								      			<span class="glyphicon glyphicon-home" aria-hidden="true"></span> Visualizar							      		
+								      		</button>
+								      </a>
+								    </div>
+								<?php }?>
 							  </div>
 							  <div class="form-group">
 							    <label for="cpfCliente" class="col-sm-2 control-label">CPF</label>
@@ -97,7 +107,7 @@
 									  </select>
 								  </div>
 						  		</div>		
-								<div class="form-group">
+								<!-- <div class="form-group">
 								    <label for="enderecos" class="col-sm-2 control-label">Endereco</label>
 								    <div class="col-sm-2">					      
 								      <a href="#" id="usuModal" data-toggle="modal" data-target="#endereco-modal">
@@ -106,7 +116,7 @@
 								      		</button>
 								      </a>
 								    </div>
-							   </div>	
+							   </div> -->	
 				  		<div>
 						<?php if ($tipo == 'CNS') {?> 
 					  		<a href="cliente.php"><button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button></a>

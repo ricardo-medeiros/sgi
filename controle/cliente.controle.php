@@ -23,5 +23,12 @@
 			 }
 			 //header("Location:http://localhost:90/sgi/index.php"); //exemplo de redirecti
 		}
+		
+		function listaCliente(){
+			$daoCliente = new daoCliente();
+			$lista = $daoCliente->listaCliente(); 
+
+			return $lista;
+		}
 	}
 ?>

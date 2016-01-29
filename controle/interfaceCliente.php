@@ -11,6 +11,7 @@
 		$cliente = new Cliente_Model();
 		$cliente->nome = $_POST["nome"];
 		$cliente->email= $_POST["emailCliente"];
+		$cliente->cpf = $_POST["cpf"];
 		
 		$clienteControle = new Cliente_Controle();
 		$clienteControle->salvarCliente($cliente);

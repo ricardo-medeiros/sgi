@@ -1,3 +1,9 @@
+<?php 
+	define('__ROOT__',dirname(dirname(dirname(__FILE__))));
+	require_once(__ROOT__.'/controle/cliente.controle.php');
+	$controleCliente = new Cliente_Controle();
+	$lista = $controleCliente->listaCliente();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -58,24 +64,24 @@
 
 						<tbody>
 						<?php 
-							for ($i = 1; $i < 15; $i++){
+							foreach ((array)$lista as $cliente) {
 						 ?>
 								<tr>
 									<td align="center"><a href="cadCliente.php?tipo=CNS">
 										 <span class="glyphicon glyphicon-search" aria-hidden="true" title="Consultar"></span>
 									</a></td>
 									<td align="center">
-									<a href="cadCliente.php?tipo=CNS">
+									<a href="cadCliente.php?tipo=UPD">
 										 <span class="glyphicon glyphicon-pencil" aria-hidden="true" title="Alterar"></span>
 									</a></td>
 									<td align="center">
-									<input type="hidden" value="<?=$i?>" id="txtIdCliente"></input>
-									<a href="#"  id="usuModal" onclick="Cliente(<?=$i?>)" data-toggle="modal" data-target="#delete-modal">
+									<input type="hidden" value="<?=$cliente->idCliente ?>" id="txtIdCliente"></input>
+									<a href="#"  id="usuModal" onclick="Cliente(<?=$cliente->idCliente ?>)" data-toggle="modal" data-target="#delete-modal">
 										<span class="glyphicon glyphicon-remove" aria-hidden="true" title="Excluir" id="iconeExcluir"></span>
 									</a></td>								
-									<td align="center"><?php echo $i ?></td>
-									<td>1111</td>
-									<td>Ricardo - <?php echo $i ?></td>								
+									<td align="center"><?php echo $cliente->idCliente ?></td>
+									<td><?php echo $cliente->cpf ?></td>
+									<td><?php echo $cliente->nome ?></td>								
 								</tr>		
 						<?php
 						}
