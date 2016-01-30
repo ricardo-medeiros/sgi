@@ -11,6 +11,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Lista de Clientes</title>
+<link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon"></link>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css"	href="https://cdn.datatables.net/1.10.8/css/dataTables.bootstrap.min.css">
 
@@ -37,7 +38,7 @@
 	}
 	
 	function redirecionaModal(cliente){
-		location.href='remover?idCliente='+cliente;
+		location.href='/sgi/controle/interfaceCliente.php?tipo=DLT&idCliente='+cliente;
 	}
 </script>
 </head>
@@ -47,7 +48,7 @@
 		<table style="font-size: 12px;">
 			  <tr>
 			    <td style="vertical-align: top;">
-			    	<a href="cadCliente.php?tipo=INS"><button type="button" class="btn btn-success" data-dismiss="modal">Novo</button></a>&nbsp;
+			    	<a href="cadCliente.php?tipo=INS&idCliente=0"><button type="button" class="btn btn-success" data-dismiss="modal">Novo</button></a>&nbsp;
 			    </td>
 				<td>							
 					<table id="tbcliente" class="table table-bordered table-hover table-striped" cellspacing="0" width="100%">
@@ -67,11 +68,11 @@
 							foreach ((array)$lista as $cliente) {
 						 ?>
 								<tr>
-									<td align="center"><a href="cadCliente.php?tipo=CNS">
+									<td align="center"><a href="cadCliente.php?tipo=CNS&idCliente=<?=$cliente->idCliente ?>">
 										 <span class="glyphicon glyphicon-search" aria-hidden="true" title="Consultar"></span>
 									</a></td>
 									<td align="center">
-									<a href="cadCliente.php?tipo=UPD">
+									<a href="cadCliente.php?tipo=UPD&idCliente=<?=$cliente->idCliente ?>"">
 										 <span class="glyphicon glyphicon-pencil" aria-hidden="true" title="Alterar"></span>
 									</a></td>
 									<td align="center">

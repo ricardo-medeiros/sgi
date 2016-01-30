@@ -45,19 +45,24 @@
 	        <li><a href="principal.php">Inicio</a></li>
 	        <li class="menu-item dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Cadastros<b class="caret"></b></a>
 	        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-	        	<li class="menu-item "><a href="usuario.php">Usuarios</a></li>
 	            <li class="menu-item "><a href="cliente.php">Clientes</a></li>
 	            <li class="menu-item "><a href="imoveis.php">Imoveis</a></li>
 	            <li class="menu-item "><a href="proprietario.php">Proprietarios</a></li>            
 	        </ul>
 	        <li><a href="contrato.php">Contratos</a></li>
-	        <li><a href="financeiro.php">Financeiro</a></li>
+	        <li class="menu-item dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Financeiro<b class="caret"></b></a>
+	        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+		        <li class="menu-item "><a href="financeiro.php">A Receber</a></li>
+	            <li class="menu-item "><a href="financeiro.php">A Pagar</a></li>
+	        </ul>
 	        <li class="menu-item dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Relatorios<b class="caret"></b></a>
 	        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
 	            <li class="menu-item "><a href="cliente.php">Clientes</a></li>
 	            <li class="menu-item "><a href="imoveis.php">Imoveis</a></li>
 	            <li class="menu-item "><a href="proprietario.php">Proprietarios</a></li>            
 	        </ul>      
+	        <li><a href="usuario.php">Corretor(a)</a></li>
+	        <li><a href="ajuda.php">Ajuda</a></li>
 	        <li><a href="<?=$_SESSION["LOGOUT"]?>">Sair</a></li>
 	      </ul>
 	    </div><!--/.nav-collapse -->

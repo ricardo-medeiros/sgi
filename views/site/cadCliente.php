@@ -3,7 +3,9 @@
 	require_once(__ROOT__.'/controle/cliente.controle.php');
 	$tipo = $_REQUEST["tipo"];		
 	$controleCliente = new Cliente_Controle();	
-	$lista = $controleCliente->listaCliente();
+	//$lista = $controleCliente->listaCliente();
+	$idCliente = $_REQUEST["idCliente"];
+	$cliente = $controleCliente->getCliente($idCliente);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -34,7 +36,7 @@
 							  <div class="form-group">
 							    <label for="cod" class="col-sm-2 control-label">Codigo</label>
 							    <div class="col-sm-1">
-							      <input type="text" name="cliente" value="" class="form-control" id="txtCodigo" placeholder="" disabled>
+							      <input type="text" name="cliente" value="<?=$cliente->idCliente ?>" class="form-control" id="txtCodigo" placeholder="" disabled>
 							    </div>
 							    <?php if ($tipo != 'INS') {?> 
 							    	<label for="enderecos" class="col-sm-1 control-label">Endereco</label>
@@ -50,39 +52,39 @@
 							  <div class="form-group">
 							    <label for="cpfCliente" class="col-sm-2 control-label">CPF</label>
 							    <div class="col-sm-2">
-							      <input required maxlength="11" minlength="11" type="text" name="cpf" class="form-control" id="txtCpf" placeholder="CPF" value="">
+							      <input required maxlength="11" minlength="11" type="text" name="cpf" class="form-control" id="txtCpf" placeholder="CPF" value="<?=$cliente->cpf ?>">
 							    </div>
 							    <span id="erroMsgCpf" style="text-align: left;color: red; display: none;">CPF já existe, favor informar outro CPF!</span>
 							  </div>					
 							  <div class="form-group">
 							    <label for="rgCliente" class="col-sm-2 control-label">RG</label>
 							    <div class="col-sm-2">
-							      <input required maxlength="11" minlength="8" type="text" name="rg" class="form-control" id="txtRg" placeholder="RG" value="">
+							      <input required maxlength="11" minlength="8" type="text" name="rg" class="form-control" id="txtRg" placeholder="RG" value="<?=$cliente->rg ?>"">
 							    </div>
 							  </div>	  
 							  <div class="form-group">
 							    <label for="nomeCliente" class="col-sm-2 control-label">Nome</label>
 							    <div class="col-sm-6">
-							      <input required maxlength="150" minlength="10" type="text" name="nome" class="form-control" id="txtCliente" placeholder="Nome" value="">
+							      <input required maxlength="150" minlength="10" type="text" name="nome" class="form-control" id="txtCliente" placeholder="Nome" value="<?=$cliente->nome ?>">
 							    </div>
 							  </div>			  		
 							  <div class="form-group">
 							    <label for="emailCliente" class="col-sm-2 control-label">E-mail</label>
 							    <div class="col-sm-4">
-							      <input required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" type="email" name="emailCliente" class="form-control" id="txtEmail" placeholder="E-mail" value="">
+							      <input required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" type="email" name="emailCliente" class="form-control" id="txtEmail" placeholder="E-mail" value="<?=$cliente->email ?>">
 							    </div>
 							    <!-- <span id="erroMsg" style="text-align: left;color: red; display: none;">Login já existe, favor informar outro login!</span> -->
 							  </div>				  
 						  	  <div class="form-group">
 							    <label for="telefoneCel" class="col-sm-2 control-label">Celular</label>
 							    <div class="col-sm-2">
-							      <input required maxlength="10" minlength="10" type="text" name="telefoneCelular"  class="form-control" id="txtCelular" placeholder="Tel. Celular" value="">
+							      <input required maxlength="10" minlength="10" type="text" name="telefoneCelular"  class="form-control" id="txtCelular" placeholder="Tel. Celular" value="<?=$cliente->telefoneCelular ?>"">
 							    </div>
 							  </div>					  			  
 							  <div class="form-group">
 							    <label for="nascCliente" class="col-sm-2 control-label">Nascimento</label>
 							    <div class="col-sm-3">					      
-							      <input required  type="date" maxlength="10" pattern="[0-9]{2}\/[0-9]{2}\/[0-9]{4}$" name="dataNasc" class="form-control" id="txtNasc" placeholder="Nascimento" value="#">
+							      <input required  type="date" maxlength="10" pattern="[0-9]{2}\/[0-9]{2}\/[0-9]{4}$" name="dataNascimento" class="form-control" id="txtNasc" placeholder="Nascimento" value="<?=$cliente->dataNascimento ?>"">
 							    </div>
 							    <span style="text-align: left" class="help-block">Formato: dd/mm/aaaa</span>
 							  </div>	
@@ -91,46 +93,32 @@
 								  <div class="col-sm-2">
 									  <select class="form-control"  name="status">
 											<?php if ($tipo != 'INS') {?> 
-			<!-- 						  		<c:if test="${funcionario.usuario.status == 'A'}"> -->
-										    	<option value="#">Ativo</option>
+				 						  	   <?php if ($cliente->status == 'A') {?> 
+										    	<option value="A">Ativo</option>
 										    	<option value="D">Desativado</option>					    	
-			<!-- 							    </c:if> -->
-			<!-- 						  		<c:if test="${funcionario.usuario.status == 'D'}"> -->
-			<!-- 							    	<option value="${funcionario.usuario.status}">Desativado</option> -->
-			<!-- 							    	<option value="A">Ativo</option>					    	 -->
-			<!-- 							    </c:if>	 -->
+				 							   <?php }?>
+											   <?php if ($cliente->status == 'D') {?> 
+										    	<option value="D">Desativado</option> 
+			 							    	<option value="A">Ativo</option>					    	 
+			 								   <?php }?>
  											<?php }?>
-											<?php if ($tipo == 'INS') {?> 
+											<?php if ($tipo == 'INS' || $cliente->status == '')  {?> 
 			 									<option value="A">Ativo</option> 
 			 							    	<option value="D">Desativado</option>									   
 											<?php }?>
 									  </select>
 								  </div>
 						  		</div>		
-								<!-- <div class="form-group">
-								    <label for="enderecos" class="col-sm-2 control-label">Endereco</label>
-								    <div class="col-sm-2">					      
-								      <a href="#" id="usuModal" data-toggle="modal" data-target="#endereco-modal">
-								      		<button type="button" class="btn btn-primary" data-dismiss="modal">
-								      			<span class="glyphicon glyphicon-home" aria-hidden="true"></span> Visualizar							      		
-								      		</button>
-								      </a>
-								    </div>
-							   </div> -->	
 				  		<div>
-						<?php if ($tipo == 'CNS') {?> 
-					  		<a href="cliente.php"><button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button></a>
- 						<?php }?>
 						<?php if ($tipo == 'INS') {?>
-	 						<button type="submit" id="salvar" name="salvar" class="btn btn-success" value="Salvar">Salvar</button> 
-	 				  		<a href="cliente.php"><button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button></a> 
+	 						<button type="submit" id="salvar" name="salvar" class="btn btn-success" value="Salvar">Salvar</button>  
 						<?php }?>
 						<?php if ($tipo == 'UPD') {?>
-	 						<button type="submit" id="alterar" name="alterar" class="btn btn-success" value="Alterar">Alterar</button> 
-	 				  		<a href="cliente.php"><button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button></a> 
+	 						<button type="submit" id="alterar" name="alterar" class="btn btn-success" value="Alterar">Alterar</button>  
 						<?php }?>
+						<a href="cliente.php"><button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button></a>
 				  		</div>
-				  		<input type="hidden" name="idCliente" value="#"></input>
+				  		<input type="hidden" name="idCliente" value="<?=$cliente->idCliente ?>"></input>
 				  </form>			  
 	 			</div>  
 			 </div>
@@ -267,8 +255,14 @@
 						 </div> 				 
 					</div>
 					<div class="modal-footer">
-						<button type="submit" class="btn btn-success" name="submit" id="i_submit">Salvar</button>
-						<button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+					   <?php if ($tipo == 'INS') {?>
+							<button type="submit" class="btn btn-success" name="submit" id="i_submit">Salvar</button>
+					   <?php }?>
+					   <?php if ($tipo == 'UPD') {?>
+					    	<button type="submit" id="alterarEnd" name="alterarEnd" class="btn btn-success" value="Alterar">Alterar</button>
+					   <?php }?>
+							<button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+
 					</div>
 				</form>
 			</div>
