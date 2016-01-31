@@ -22,7 +22,7 @@
             ?>
 	</div>
 	<div id="lista">
-		 <iframe src="../site/relacaoCliente.php" id="cliente" style="display: block; border: none; height: 100vh; width: 100vw;"></iframe> 
+		 <iframe src="../site/novalista.php" id="cliente" style="display: block; border: none; height: 100vh; width: 100vw;"></iframe> 
 		 <!-- <object data="listaCliente.php" type="text/html" style="display: block; border: none; height: 100vh; width: 100vw;"></object> --> 
 	</div>
 	<div id="rodape">
