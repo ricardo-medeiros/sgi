@@ -2,8 +2,8 @@
 	define('__ROOT__',dirname(dirname(dirname(__FILE__))));
 	require_once(__ROOT__.'/controle/cliente.controle.php');
 	$tipo = $_REQUEST["tipo"];		
+	$action = __ROOT__.'/controle/implCliente.php';
 	$controleCliente = new Cliente_Controle();	
-	//$lista = $controleCliente->listaCliente();
 	$idCliente = $_REQUEST["idCliente"];
 	$cliente = $controleCliente->getCliente($idCliente);
 ?>
@@ -32,8 +32,9 @@
 		  <div class="panel-heading" style="text-align:center;">Cadastro de Cliente</div>
 		  	<div class="panel-body">
 		  		<div class="text-center">		  		
-				    <form action="/sgi/controle/implCliente.php" method="post" class="form-horizontal" data-toggle="validator" role="form" id="form">
-							  <div class="form-group">
+				    <!-- <form action="/sgi/controle/implCliente.php" method="post" class="form-horizontal" data-toggle="validator" role="form" id="form"> -->
+				    <form action="controle/implCliente.php" method="post" class="form-horizontal" data-toggle="validator" role="form" id="form">
+							  <div class="form-group">							  
 							    <label for="cod" class="col-sm-2 control-label">Codigo</label>
 							    <div class="col-sm-1">
 							      <input type="text" name="cliente" value="<?=$cliente->idCliente ?>" class="form-control" id="txtCodigo" placeholder="" disabled>
