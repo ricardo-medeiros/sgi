@@ -2,7 +2,6 @@
 	define('__ROOT__',dirname(dirname(dirname(__FILE__))));
 	require_once(__ROOT__.'/controle/cliente.controle.php');
 	$tipo = $_REQUEST["tipo"];		
-	$action = __ROOT__.'/controle/implCliente.php';
 	$controleCliente = new Cliente_Controle();	
 	$idCliente = $_REQUEST["idCliente"];
 	$cliente = $controleCliente->getCliente($idCliente);
