@@ -38,7 +38,7 @@
 	}
 	
 	function redirecionaModal(cliente){
-		location.href='/sgi/controle/interfaceCliente.php?tipo=DLT&idCliente='+cliente;
+		location.href='/sgi/controle/implCliente.php?tipo=DLT&idCliente='+cliente;
 	}
 </script>
 </head>
