@@ -32,7 +32,7 @@
 		  	<div class="panel-body">
 		  		<div class="text-center">		  		
 				    <!-- <form action="/sgi/controle/implCliente.php" method="post" class="form-horizontal" data-toggle="validator" role="form" id="form"> -->
-				    <form action="controle/implCliente.php" method="post" class="form-horizontal" data-toggle="validator" role="form" id="form">
+				    <form action="/controle/implCliente.php" method="post" class="form-horizontal" data-toggle="validator" role="form" id="form">
 							  <div class="form-group">							  
 							    <label for="cod" class="col-sm-2 control-label">Codigo</label>
 							    <div class="col-sm-1">
