@@ -1,11 +1,11 @@
 <?php 
 	session_start();
-
+	$site = $_SESSION["INDEX"];
 	if( isset($_SESSION['LAST_REQUEST']) &&
-	(time() - $_SESSION['LAST_REQUEST'] > 300) ) {
+	(time() - $_SESSION['LAST_REQUEST'] > 60) && $_SESSION["NOME"] != '') {
 		session_unset();
 		session_destroy();
-		header("Location: http://localhost:90/sgi/index.php");
+		header('Location: ' .$site);
 		exit();
 	}
 	else 
@@ -29,7 +29,8 @@
 </head>
 <body>
 	<div class="navbar navbar-inverse navbar-fixed-top">
-	  <div class="container">
+	  <!-- <div class="container" style="text-align: left;"> -->
+	  <div style="text-align: left;">
 	    <div class="navbar-header">
 	      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
 	        <span class="icon-bar"></span>
@@ -66,10 +67,8 @@
 	        <li><a href="<?=$_SESSION["LOGOUT"]?>">Sair</a></li>
 	      </ul>
 	    </div><!--/.nav-collapse -->
-	    <div class="collapse navbar-collapse">
-	       <ul class="nav navbar-nav">
-	      	 <li style="color: white; font-size: 11px;">Corretor(a): <?php echo $nome ?></li>
-	       </ul>
+	    <div class="bar-login" style="text-align: left; margin-left: 15px;">
+	      	 <span style="color: white; font-size: 11px;">Corretor(a): <?php echo $nome ?></span>
 	    </div>
 	  </div>
 	</div>     

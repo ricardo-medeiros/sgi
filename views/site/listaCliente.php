@@ -38,14 +38,14 @@
 	}
 	
 	function redirecionaModal(cliente){
-		location.href='/controle/implCliente.php?tipo=DLT&idCliente='+cliente;
+		location.href='/sgi/controle/implCliente.php?tipo=DLT&idCliente='+cliente;
 	}
 </script>
 </head>
 <body>
-<div>   
+<div align="center">   
 	<div class="container" style="margin-top: 80px; width: 70%;">		 
-		<table style="font-size: 12px;">
+		<table style="font-size: 12px; ">
 			  <tr>
 			    <td style="vertical-align: top;">
 			    	<a href="cadCliente.php?tipo=INS&idCliente=0"><button type="button" class="btn btn-success" data-dismiss="modal">Novo</button></a>&nbsp;

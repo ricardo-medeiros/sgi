@@ -12,6 +12,7 @@ class Cliente_Model{
 	public $email;
 	public $status;
 	public $caminhoFoto;
+	public $endereco;
 
 	
 	public function setIdCliente($idCliente){
@@ -54,6 +55,10 @@ class Cliente_Model{
 		$this->caminhoFoto = $caminhoFoto;
 	}
 	
+	public function setEndereco($endereco){
+		$this->endereco = $endereco;	
+	}
+	
 	public function getIdCliente(){
 		return $this->idCliente;
 	}
@@ -92,6 +97,10 @@ class Cliente_Model{
 	
 	public function getCaminhoFoto(){
 		return $this->caminhoFoto;
+	}
+	
+	public function getEndereco(){
+		return $this->endereco;
 	}
 }
 

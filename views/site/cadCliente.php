@@ -1,10 +1,25 @@
 <?php
 	define('__ROOT__',dirname(dirname(dirname(__FILE__))));
 	require_once(__ROOT__.'/controle/cliente.controle.php');
+	require_once(__ROOT__.'/controle/verifica.login.php');
+	$verifica = new verifica_login();
+	$ok = $verifica->verifica();
+	
+	if ($ok){
+		echo "<script type='text/javascript' language='javascript'>
+				window.top.location.href = '/sgi/index.php';
+			  </script>";
+	}
+	
 	$tipo = $_REQUEST["tipo"];		
 	$controleCliente = new Cliente_Controle();	
 	$idCliente = $_REQUEST["idCliente"];
 	$cliente = $controleCliente->getCliente($idCliente);
+	$endereco = new Endereco_Model();
+	$estados = $controleCliente->getEstados();
+	if ($cliente->endereco > 0){
+		$endereco= $controleCliente->getEndCliente($cliente);
+	}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -17,13 +32,18 @@
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 <script type="text/javascript" language="javascript">
-
+	function Cliente(cliente){		
+		document.getElementById('txtIdCliente').value = cliente;
+	}
+	function Fechar(){
+		window.top.location.href = "cliente.php";
+	}
 </script>
 </head>
 <body style="margin: 0">
 	<div id="menu">
 		<?php
-               // include("../cabecalho/menu.php");
+                //include("../cabecalho/menu.php");
             ?>
 	</div>
 	<div id="corpo" class="container" style="margin-top: 80px; width: 85%;">
@@ -32,17 +52,17 @@
 		  	<div class="panel-body">
 		  		<div class="text-center">		  		
 				    <!-- <form action="/sgi/controle/implCliente.php" method="post" class="form-horizontal" data-toggle="validator" role="form" id="form"> -->
-				    <form action="/controle/implCliente.php" method="post" class="form-horizontal" data-toggle="validator" role="form" id="form">
+				    <form action="/sgi/controle/implCliente.php" method="post" class="form-horizontal" data-toggle="validator" role="form" id="form">
 							  <div class="form-group">							  
 							    <label for="cod" class="col-sm-2 control-label">Codigo</label>
-							    <div class="col-sm-1">
+							    <div class="col-sm-2">
 							      <input type="text" name="cliente" value="<?=$cliente->idCliente ?>" class="form-control" id="txtCodigo" placeholder="" disabled>
 							    </div>
 							    <?php if ($tipo != 'INS') {?> 
 							    	<label for="enderecos" class="col-sm-1 control-label">Endereco</label>
 								    <div class="col-sm-1">					      
 								      <a href="#" id="usuModal" data-toggle="modal" data-target="#endereco-modal">
-								      		<button type="button" class="btn btn-primary" data-dismiss="modal">
+								      		<button type="button" onclick="Cliente(<?=$cliente->idCliente ?>)" class="btn btn-primary" data-dismiss="modal">
 								      			<span class="glyphicon glyphicon-home" aria-hidden="true"></span> Visualizar							      		
 								      		</button>
 								      </a>
@@ -116,9 +136,10 @@
 						<?php if ($tipo == 'UPD') {?>
 	 						<button type="submit" id="alterar" name="alterar" class="btn btn-success" value="Alterar">Alterar</button>  
 						<?php }?>
-						<a href="cliente.php"><button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button></a>
+						<a href="#" onclick="Fechar()"><button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button></a>
 				  		</div>
 				  		<input type="hidden" name="idCliente" value="<?=$cliente->idCliente ?>"></input>
+				  		<input type="hidden" name="txtIdEndereco" value="<?=$endereco->idEndereco ?>" id="txtIdEndereco" >
 				  </form>			  
 	 			</div>  
 			 </div>
@@ -136,7 +157,7 @@
 		aria-labelledby="modalLabel" style="margin-top: 80px;">
 		<div class="modal-dialog modal-sm" role="document" style="width:800px;">
 			<div class="modal-content">
-				<form action="#" method="POST" id="form2" class="form-horizontal" data-toggle="validator" role="form">
+				<form action="/sgi/controle/implCliente.php" method="POST" id="form2" class="form-horizontal" data-toggle="validator" role="form">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal"
 							aria-label="Fechar">
@@ -150,22 +171,24 @@
 						 <input type="hidden" id="txtPagina" name="txtPagina" /> -->
 						 <div class="form-group">
 						    <label for="cod" class="col-sm-2 control-label">Codigo</label>
-						    <div class="col-sm-1">
-						      <input type="text" name="idEndereco" value="" class="form-control" id="txtIdEndereco" placeholder="" disabled>
+						    <div class="col-sm-2">
+						      <input type="text" name="idEndereco" value="<?=$endereco->idEndereco ?>" class="form-control" id="idEndereco" placeholder="" disabled>
+						      <input type="hidden" name="txtIdEndereco" value="<?=$endereco->idEndereco ?>" id="txtIdEndereco" >
+						      <input type="hidden" name="txtIdCliente" id="txtIdCliente">
 						    </div>
 						 </div>		
 						 <div class="form-group">
 								<label for="cep" class="col-sm-2 control-label">CEP</label>
 								<div class="col-sm-2">
 									<input required maxlength="9" minlength="9" type="text" name="cep" class="form-control"
-										id="txtCep" placeholder="Cep" value="">
+										id="txtCep" placeholder="Cep" value="<?=$endereco->cep ?>">
 								</div>
 								<span style="text-align: left" class="help-block">Formato: 00000-000</span>
 						 </div>
 						 <div class="form-group">
 								<label for="rua" class="col-sm-2 control-label">Rua</label>
 								<div class="col-sm-8">
-									<input  required maxlength="200" minlength="1" type="text" name="rua" value=""
+									<input  required maxlength="200" minlength="1" type="text" name="rua" value="<?=$endereco->rua ?>"
 										class="form-control" id="txtRua" placeholder="Rua">
 								</div>
 						 </div>
@@ -174,7 +197,7 @@
 								<div class="col-sm-5">
 									<input  required maxlength="70" minlength="1" type="text" name="bairro" class="form-control"
 										id="txtBairro" placeholder="Bairro"
-										value="">
+										value="<?=$endereco->bairro ?>">
 								</div>
 						 </div>
 						 <div class="form-group">
@@ -182,84 +205,27 @@
 								<div class="col-sm-5">
 									<input  required maxlength="50" minlength="1" type="text" name="cidade" class="form-control"
 										id="txtCidade" placeholder="Cidade"
-										value="">
+										value="<?=$endereco->cidade ?>">
 								</div>
 						 </div>
 						 <div class="form-group">
 								<label for="ufCliente" class="col-sm-2 control-label">Estado</label>
 								<div class="col-sm-4">
 									<select required name="uf" class="form-control" id="txtUf"
-										placeholder="UF" value="">
-			 							 <?php if ($tipo == 'INS') {?> 
-										    	<option value="#">Selecione</option>
-												<option value="ac">Acre</option> 
-												<option value="al">Alagoas</option> 
-												<option value="am">Amazonas</option> 
-												<option value="ap">Amapa</option> 
-												<option value="ba">Bahia</option> 
-												<option value="ce">Ceara</option> 
-												<option value="df">Distrito Federal</option> 
-												<option value="es">Espirito Santo</option> 
-												<option value="go">Goias</option> 
-												<option value="ma">Maranhao</option> 
-												<option value="mt">Mato Grosso</option> 
-												<option value="ms">Mato Grosso do Sul</option> 
-												<option value="mg">Minas Gerais</option> 
-												<option value="pa">Para</option> 
-												<option value="pb">Paraiba</option> 
-												<option value="pr">Parana</option> 
-												<option value="pe">Pernambuco</option> 
-												<option value="pi">Piaui</option> 
-												<option value="rj">Rio de Janeiro</option> 
-												<option value="rn">Rio Grande do Norte</option> 
-												<option value="ro">Rondonia</option> 
-												<option value="rs">Rio Grande do Sul</option> 
-												<option value="rr">Roraima</option> 
-												<option value="sc">Santa Catarina</option> 
-												<option value="se">Sergipe</option> 
-												<option value="sp">Sao Paulo</option> 
-												<option value="to">Tocantins</option> 					    	
-			 							 <?php } ?> 
-			 							 <?php if ($tipo != 'INS') {?> 
-										    	<option value="#">Selecione</option>
-												<option value="ac">Acre</option> 
-												<option value="al">Alagoas</option> 
-												<option value="am">Amazonas</option> 
-												<option value="ap">Amapa</option> 
-												<option value="ba">Bahia</option> 
-												<option value="ce">Ceara</option> 
-												<option value="df">Distrito Federal</option> 
-												<option value="es">Espirito Santo</option> 
-												<option value="go">Goias</option> 
-												<option value="ma">Maranhao</option> 
-												<option value="mt">Mato Grosso</option> 
-												<option value="ms">Mato Grosso do Sul</option> 
-												<option value="mg">Minas Gerais</option> 
-												<option value="pa">Para</option> 
-												<option value="pb">Paraiba</option> 
-												<option value="pr">Parana</option> 
-												<option value="pe">Pernambuco</option> 
-												<option value="pi">Piaui</option> 
-												<option value="rj">Rio de Janeiro</option> 
-												<option value="rn">Rio Grande do Norte</option> 
-												<option value="ro">Rondonia</option> 
-												<option value="rs">Rio Grande do Sul</option> 
-												<option value="rr">Roraima</option> 
-												<option value="sc">Santa Catarina</option> 
-												<option value="se">Sergipe</option> 
-												<option value="sp">Sao Paulo</option> 
-												<option value="to">Tocantins</option> 				    	
-			 							 <?php } ?> 
+										placeholder="UF" value="" >			 							 
+			 							 	<?php for($i=0; $i < count($estados["idEstado"]); $i ++) {?>
+			 							 		<option <?php if ($estados["idEstado"][$i] == $endereco->uf) {?> selected <?php }?>  value="<?=$estados["idEstado"][$i]?>"><?=$estados["nomeEstado"][$i]?></option> 
+			 							 	<?php }?>									 
 									</select>
 								</div>
 						 </div> 				 
 					</div>
 					<div class="modal-footer">
 					   <?php if ($tipo == 'INS') {?>
-							<button type="submit" class="btn btn-success" name="submit" id="i_submit">Salvar</button>
+							<button type="submit" class="btn btn-success" name="salvarEndereco" id="salvarEndereco" value="Salvar">Salvar</button>
 					   <?php }?>
 					   <?php if ($tipo == 'UPD') {?>
-					    	<button type="submit" id="alterarEnd" name="alterarEnd" class="btn btn-success" value="Alterar">Alterar</button>
+					    	<button type="submit" id="salvarEnd" name="salvarEnd" class="btn btn-success" value="Salvar">Salvar</button>
 					   <?php }?>
 							<button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
 
