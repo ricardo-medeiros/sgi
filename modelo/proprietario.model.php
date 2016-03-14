@@ -7,6 +7,7 @@ class Proprietario_Model{
 	public $nome;
 	public $telefoneContato;
 	public $email;
+	public $usuario;
 		
 	public function setIdProprietario($idProprietario){
 		$this->idProprietario = $idProprietario;
@@ -28,6 +29,10 @@ class Proprietario_Model{
 		$this->email = $email;
 	}
 	
+	public function setUsuario($usuario){
+		$this->usuario = $usuario;	
+	}
+	
 	public function getIdProprietario(){
 		return $this->idProprietario;
 	}
@@ -47,6 +52,10 @@ class Proprietario_Model{
 	public function getEmail(){
 		return $this->email;
 	}	
+	
+	public function getUsuario(){
+		return $this->usuario;
+	}
 }
 
 ?>

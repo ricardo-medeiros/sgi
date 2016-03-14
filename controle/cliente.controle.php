@@ -6,6 +6,7 @@
 	require_once(__ROOT__.'/dao/daoCliente.php');
     //require_once '../dao/daoCliente.php';
 
+	
 	class Cliente_Controle{	
 
 		function salvarCliente($cliente)
@@ -15,6 +16,8 @@
 			 $ok = $daoCliente->salvarCliente($cliente); 
 			 
 			 $idCliente = $daoCliente->getClienteCPF($cpf);
+			 $tipo   = base64_encode('UPD');
+			 $codigo = base64_encode($idCliente);
 			 
 			 if (!$ok)
 			 {
@@ -23,7 +26,7 @@
 			 else 
 			 {
 				//echo 'Cliente Salvo com Sucesso';
-			 	header("Location: ../views/site/cadCliente.php?tipo=UPD&idCliente=".$idCliente);
+			 	header("Location: ../views/site/cadCliente.php?tipo=".$tipo."&idCliente=".$codigo);
 				//echo "<script language='JavaScript'> window.parent.document.getElementById('resultado').innerHTML = 'Cliente Salvo com Sucesso';</script>";
 			 }
 			 //header("Location:http://localhost:90/sgi/index.php"); //exemplo de redirecti
@@ -41,6 +44,9 @@
 				$cliente = $daoCliente->getCliente($idCliente);					
 				$ok = $daoCliente->alterarCliente($cliente,$idEndereco);							
 			}			
+			
+			$tipo   = base64_encode('UPD');
+			$codigo = base64_encode($idCliente);
 			if (!$ok)
 			{
 				echo 'Erro ao Alterar Cliente';
@@ -49,7 +55,7 @@
 			{
 				//echo 'Cliente Salvo com Sucesso';
 				//echo "<script language='JavaScript'> window.parent.document.getElementById('resultado').innerHTML = 'Cliente Salvo com Sucesso';</script>";
-				header("Location: ../views/site/cadCliente.php?tipo=UPD&idCliente=".$idCliente);
+				header("Location: ../views/site/cadCliente.php?tipo=".$tipo."&idCliente=".$codigo);
 			}
 			
 		}
@@ -78,6 +84,9 @@
 			$idCliente = $cliente->idCliente;
 			$ok = $daoCliente->alterarCliente($cliente,$idEndereco);
 		
+			$tipo   = base64_encode('UPD');
+			$codigo = base64_encode($idCliente);
+			
 			 if (!$ok)
 			 {
 				echo 'Erro ao Alterar Cliente';
@@ -86,7 +95,7 @@
 			 {
 				//echo 'Cliente Salvo com Sucesso';
 				//echo "<script language='JavaScript'> window.parent.document.getElementById('resultado').innerHTML = 'Cliente Salvo com Sucesso';</script>";
-			 	header("Location: ../views/site/cadCliente.php?tipo=UPD&idCliente=".$idCliente); 
+			 	header("Location: ../views/site/cadCliente.php?tipo=".$tipo."&idCliente=".$codigo); 
 			 }
 		}
 		

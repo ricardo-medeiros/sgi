@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon"></link>
+<!-- <link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon"></link> -->
 <link rel="stylesheet"	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
@@ -21,7 +21,7 @@
                 include("../cabecalho/menu.php");
             ?>
 	</div>
-	<div id="lista">
+	<div id="corpo">
 		 <!-- <iframe src="../site/listaCliente.php" id="cliente" style="display: block; border: none; height: 100vh; width: 100vw;"></iframe> --> 
 		  <object data="listaCliente.php" type="text/html" style="display: block; border: none; height: 100vh; width: 100vw;"></object> 
 	</div>

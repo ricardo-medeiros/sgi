@@ -1,4 +1,5 @@
 <?php 
+	session_start();
 	require_once(__ROOT__.'/modelo/cliente.model.php');
 	require_once(__ROOT__.'/modelo/endereco.model.php');
 	require_once(__ROOT__.'/dao/conexao.php');
@@ -13,7 +14,7 @@ class daoCliente{
 		$dao = new conexao();
 		$conn = $dao->conectar();
 		
-		$sql = "INSERT INTO cliente(nome, email,cpf,status,rg,telefoneCelular,dataNascimento) VALUES(:nome, :email, :cpf, :status ,:rg, :telefoneCelular, :dataNascimento)";
+		$sql = "INSERT INTO cliente(nome, email,cpf,status,rg,telefoneCelular,dataNascimento,idUsuario) VALUES(:nome, :email, :cpf, :status ,:rg, :telefoneCelular, :dataNascimento,:idUsuario)";
 		
 		$stmt = $conn->prepare($sql);
 		
@@ -24,6 +25,7 @@ class daoCliente{
 		$stmt->bindParam( ':rg', $cliente->rg );
 		$stmt->bindParam( ':telefoneCelular', $cliente->telefoneCelular );
 		$stmt->bindParam( ':dataNascimento', $cliente->dataNascimento );
+		$stmt->bindParam( ':idUsuario' , $_SESSION["USUARIO"]);
 		
 		$result = $stmt->execute();
 		
@@ -104,7 +106,7 @@ class daoCliente{
 		$dao = new conexao();
 		$conn = $dao->conectar();
 	
-		$sql = "UPDATE cliente set nome = :nome, email= :email,cpf= :cpf,status= :status, rg= :rg, telefoneCelular= :telefoneCelular, dataNascimento= :dataNascimento,idEndereco= :idEndereco where idCliente = :idCliente";
+		$sql = "UPDATE cliente set nome = :nome, email= :email,cpf= :cpf,status= :status, rg= :rg, telefoneCelular= :telefoneCelular, dataNascimento= :dataNascimento,idEndereco= :idEndereco, idUsuario= :idUsuario where idCliente = :idCliente";
 	
 		$stmt = $conn->prepare($sql);
 	
@@ -116,6 +118,7 @@ class daoCliente{
 		$stmt->bindParam( ':telefoneCelular', $cliente->telefoneCelular );
 		$stmt->bindParam( ':dataNascimento', $cliente->dataNascimento );
 		$stmt->bindParam( ':idEndereco', $idEndereco );
+		$stmt->bindParam( ':idUsuario', $_SESSION["USUARIO"] );
 		$stmt->bindParam( ':idCliente', $cliente->idCliente );
 	
 		$result = $stmt->execute();
@@ -137,7 +140,7 @@ class daoCliente{
 		$dao = new conexao();
 		$conn = $dao->conectar();
 	
-		$sql = "select * from cliente";
+		$sql = "select * from cliente where idUsuario = " . $_SESSION["USUARIO"];
 	
 		$consulta = $conn->query($sql);
 		$lista = new ArrayObject();
@@ -151,7 +154,7 @@ class daoCliente{
 			$cliente->status= $linha["status"];
 			$cliente->rg= $linha["rg"];
 			$cliente->telefoneCelular = $linha["telefoneCelular"];
-			$cliente->dataNascimento = $linha["dataNascimento"];
+			$cliente->dataNascimento = $linha["dataNascimento"];			
 			$lista->append($cliente);
 		}
 		

@@ -11,9 +11,11 @@
 			  </script>";
 	}
 	
-	$tipo = $_REQUEST["tipo"];		
+	//$tipo = $_REQUEST["tipo"];	
+	$tipo = base64_decode($_GET['tipo']);	
 	$controleCliente = new Cliente_Controle();	
-	$idCliente = $_REQUEST["idCliente"];
+	//$idCliente = $_REQUEST["idCliente"];
+	$idCliente = base64_decode($_GET['idCliente']);
 	$cliente = $controleCliente->getCliente($idCliente);
 	$endereco = new Endereco_Model();
 	$estados = $controleCliente->getEstados();

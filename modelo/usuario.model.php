@@ -10,6 +10,7 @@ class Usuario_Model{
 	public $senha;
 	public $status;
 	public $caminhoLogo;
+	public $endereco;
 
 	
 	public function setIdUsuario($idUsuario){
@@ -44,6 +45,10 @@ class Usuario_Model{
 		$this->caminhoLogo = $caminhoLogo;
 	}
 	
+	public function setEndereco($endereco){
+		$this->endereco = $endereco;
+	}
+	
 	public function getIdUsuario(){
 		return $this->idUsuario;
 	}
@@ -74,6 +79,10 @@ class Usuario_Model{
 	
 	public function getCaminhoLogo(){
 		return $this->caminhoLogo;
+	}
+	
+	public function getEndereco(){
+		return $this->endereco;
 	}
 }
 

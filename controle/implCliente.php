@@ -5,6 +5,8 @@
  require_once(__ROOT__.'/controle/cliente.controle.php');
 
 		
+ if ($_SESSION["USUARIO"] != '')
+ {
 	if(isset($_POST["salvar"]) == 'Salvar'){
 		salvarCliente();
 	}
@@ -23,7 +25,8 @@
 		excluirCliente($idCliente);
 	}
 	
-	
+ }
+ 
 	function salvarCliente(){
 		$cliente = new Cliente_Model();
 		$cliente->nome = $_POST["nome"];

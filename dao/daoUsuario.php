@@ -39,21 +39,93 @@ class daoUsuario{
 		$dao->desconectar();
 	}
 	
-	public function alterarUsuario($usuario){
+	public function salvarEndUsuario($endereco){
 		$dao = new conexao();
 		$conn = $dao->conectar();
 	
-		$sql = "UPDATE usuario set nome = :nome, login= :login,cpf= :cpf,status= :status, senha= :senha, telefoneContato= :telefoneContato, caminhoLogo= :caminhoLogo where idUsuario = :idUsuario";
+		$sql = "INSERT INTO endereco(rua, bairro,cidade,uf,cep) VALUES(:rua, :bairro, :cidade, :uf ,:cep)";
+	
+		$stmt = $conn->prepare($sql);
+	
+		$stmt->bindParam( ':rua', $endereco->rua );
+		$stmt->bindParam( ':bairro', $endereco->bairro );
+		$stmt->bindParam( ':cidade', $endereco->cidade );
+		$stmt->bindParam( ':uf', $endereco->uf );
+		$stmt->bindParam( ':cep', $endereco->cep );
+	
+		$result = $stmt->execute();
+		$id = $conn->lastInsertId();
+	
+		if (!$result )
+		{
+			var_dump( $stmt->errorInfo() );
+			return 0;
+		}
+		else
+		{
+			return $id;
+		}
+	
+		$dao->desconectar();
+	}
+	
+	public function alterarEndUsuario($endereco){
+		$dao = new conexao();
+		$conn = $dao->conectar();
+	
+		$sql = "UPDATE endereco set rua= :rua, bairro= :bairro, cidade= :cidade, uf= :uf, cep= :cep where idEndereco= :idEndereco";
+	
+		$stmt = $conn->prepare($sql);
+	
+		$stmt->bindParam( ':rua', $endereco->rua );
+		$stmt->bindParam( ':bairro', $endereco->bairro );
+		$stmt->bindParam( ':cidade', $endereco->cidade );
+		$stmt->bindParam( ':uf', $endereco->uf );
+		$stmt->bindParam( ':cep', $endereco->cep );
+		$stmt->bindParam( ':idEndereco', $endereco->idEndereco );
+	
+		$result = $stmt->execute();
+	
+		if (!$result )
+		{
+			var_dump( $stmt->errorInfo() );
+			return false;
+		}
+		else
+		{
+			return true;
+		}
+	
+		$dao->desconectar();
+	}
+	
+	public function alterarUsuario($usuario,$idEndereco){
+		$dao = new conexao();
+		$conn = $dao->conectar();
+	
+		if ($usuario->caminhoLogo != null)
+		{
+			$sql = "UPDATE usuario set nome = :nome,cpf= :cpf, senha= :senha, telefoneContato= :telefoneContato, caminhoLogo= :caminhoLogo,idEndereco= :idEndereco where idUsuario = :idUsuario";
+		}
+		else 
+		{
+			$sql = "UPDATE usuario set nome = :nome,cpf= :cpf, senha= :senha, telefoneContato= :telefoneContato,idEndereco= :idEndereco where idUsuario = :idUsuario";
+		}
 	
 		$stmt = $conn->prepare($sql);
 	
 		$stmt->bindParam( ':nome', $usuario->nome );
-		$stmt->bindParam( ':login', $usuario->login );
+		//$stmt->bindParam( ':login', $usuario->login );
 		$stmt->bindParam( ':cpf', $usuario->cpf );
-		$stmt->bindParam( ':status', $usuario->status );
+		//$stmt->bindParam( ':status', $usuario->status );
 		$stmt->bindParam( ':senha', $usuario->senha);
 		$stmt->bindParam( ':telefoneContato', $usuario->telefoneContato );
-		$stmt->bindParam( ':caminhoLogo', $usuario->caminhoLogo );
+		if ($usuario->caminhoLogo != null)
+		{
+			$stmt->bindParam( ':caminhoLogo', $usuario->caminhoLogo );
+		}
+		
+		$stmt->bindParam( ':idEndereco', $idEndereco );
 		$stmt->bindParam( ':idUsuario', $usuario->idUsuario );
 	
 		$result = $stmt->execute();
@@ -121,7 +193,7 @@ class daoUsuario{
 		$dao->desconectar();
 	}
 	
-	public function getUsuario($idusuario){
+	public function getUsuario($idUsuario){
 		$dao = new conexao();
 		$conn = $dao->conectar();
 	
@@ -139,9 +211,33 @@ class daoUsuario{
 		$usuario->status= $linha["status"];
 		$usuario->senha= $linha["senha"];
 		$usuario->telefoneContato = $linha["telefoneContato"];
-		$usuario->caminhoLogo = $linha["caminhoLogo"];	
+		$usuario->caminhoLogo = $linha["caminhoLogo"];
+		$usuario->endereco = $linha["idEndereco"];
 
 		return $usuario;
+	
+		$dao->desconectar();
+	}
+	
+	public function getEndUsuario($usuario){
+		$dao = new conexao();
+		$conn = $dao->conectar();
+	
+		$sql = "select * from endereco where idEndereco =" .$usuario->endereco;
+	
+		$consulta = $conn->query($sql);
+		$consulta->execute();
+		$linha = $consulta->fetch(PDO::FETCH_ASSOC);
+	
+		$endereco = new Endereco_Model();
+		$endereco->idEndereco = $linha['idEndereco'];
+		$endereco->rua = $linha['rua'];
+		$endereco->bairro = $linha['bairro'];
+		$endereco->cidade = $linha['cidade'];
+		$endereco->uf= $linha["uf"];
+		$endereco->cep= $linha["cep"];
+	
+		return $endereco;
 	
 		$dao->desconectar();
 	}
@@ -168,16 +264,18 @@ class daoUsuario{
 		$dao = new conexao();
 		$conn = $dao->conectar();
 	
-		$sql = "select nome from usuario where login ='" .$login ."' and senha='" .$senha ."'";
+		$sql = "select * from usuario where login ='" .$login ."' and senha='" .$senha ."'";
 		
 		$consulta = $conn->prepare($sql);
 		$consulta->execute();
 		$linha = $consulta->fetch(PDO::FETCH_ASSOC);
 	
 		$usuario = new Usuario_Model();
+		$usuario->idUsuario = $linha['idUsuario'];
 		$usuario->nome = $linha['nome'];
+		$usuario->cpf  = $linha['cpf'];
 		
-		return $usuario->nome;
+		return $usuario;
 	
 		$dao->desconectar();
 	}

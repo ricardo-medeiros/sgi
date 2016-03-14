@@ -1,8 +1,9 @@
 <?php 
 	session_start();
 	$site = $_SESSION["INDEX"];
+	$code = base64_encode($_SESSION["USUARIO"]);
 	if( isset($_SESSION['LAST_REQUEST']) &&
-	(time() - $_SESSION['LAST_REQUEST'] > 60) && $_SESSION["NOME"] != '') {
+	(time() - $_SESSION['LAST_REQUEST'] > 1200) && $_SESSION["NOME"] != '') { //20 minutos
 		session_unset();
 		session_destroy();
 		header('Location: ' .$site);
@@ -58,11 +59,11 @@
 	        </ul>
 	        <li class="menu-item dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Relatorios<b class="caret"></b></a>
 	        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-	            <li class="menu-item "><a href="cliente.php">Clientes</a></li>
+	            <li class="menu-item "><a href="relClientes.php">Clientes</a></li>
 	            <li class="menu-item "><a href="imoveis.php">Imoveis</a></li>
 	            <li class="menu-item "><a href="proprietario.php">Proprietarios</a></li>            
 	        </ul>      
-	        <li><a href="usuario.php">Corretor(a)</a></li>
+	        <li><a href="usuario.php?usuario=<?=$code?>">Corretor(a)</a></li>
 	        <li><a href="ajuda.php">Ajuda</a></li>
 	        <li><a href="<?=$_SESSION["LOGOUT"]?>">Sair</a></li>
 	      </ul>

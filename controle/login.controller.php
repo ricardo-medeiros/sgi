@@ -8,11 +8,12 @@
     $senha = $_POST["j_password"];
     
     $usuarioControle = new Usuario_Controle();
-    $nome = $usuarioControle->efetuarLogin($login,$senha);
+    $usuario = $usuarioControle->efetuarLogin($login,$senha);
     
-	if ($nome != '')
+	if ($usuario->nome != '')
 	{
-		$_SESSION["NOME"]   = $nome;
+		$_SESSION["NOME"]   = $usuario->nome;
+		$_SESSION["USUARIO"]= $usuario->idUsuario;
 		$_SESSION["SITE"]   = "http://localhost:90/sgi/views/site/principal.php";
 		$_SESSION["LOGOUT"] = "http://localhost:90/sgi/controle/logout.controller.php";
 		header('Location: ' .$_SESSION["SITE"]);

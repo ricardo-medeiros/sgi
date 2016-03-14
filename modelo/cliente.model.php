@@ -13,6 +13,7 @@ class Cliente_Model{
 	public $status;
 	public $caminhoFoto;
 	public $endereco;
+	public $usuario;
 
 	
 	public function setIdCliente($idCliente){
@@ -59,6 +60,10 @@ class Cliente_Model{
 		$this->endereco = $endereco;	
 	}
 	
+	public function setUsuario($usuario){
+		$this->usuario = $usuario;
+	}
+	
 	public function getIdCliente(){
 		return $this->idCliente;
 	}
@@ -101,6 +106,10 @@ class Cliente_Model{
 	
 	public function getEndereco(){
 		return $this->endereco;
+	}
+	
+	public function getUsuario(){
+		return $this->usuario;
 	}
 }
 

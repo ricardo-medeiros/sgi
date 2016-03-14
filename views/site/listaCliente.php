@@ -11,7 +11,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Lista de Clientes</title>
-<link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon"></link>
+<!-- <link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon"></link> -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css"	href="https://cdn.datatables.net/1.10.8/css/dataTables.bootstrap.min.css">
 
@@ -48,7 +48,10 @@
 		<table style="font-size: 12px; ">
 			  <tr>
 			    <td style="vertical-align: top;">
-			    	<a href="cadCliente.php?tipo=INS&idCliente=0"><button type="button" class="btn btn-success" data-dismiss="modal">Novo</button></a>&nbsp;
+			    	<?php $tipo   = base64_encode('INS');
+			    		  $codigo = base64_encode(0);
+			    	?>
+			    	<a href="cadCliente.php?tipo=<?=$tipo?>&idCliente=<?=$codigo?>"><button type="button" class="btn btn-success" data-dismiss="modal">Novo</button></a>&nbsp;
 			    </td>
 				<td>							
 					<table id="tbcliente" class="table table-bordered table-hover table-striped" cellspacing="0" width="100%">
@@ -66,14 +69,16 @@
 						<tbody>
 						<?php 
 							foreach ((array)$lista as $cliente) {
+								 $tipo   = base64_encode('UPD');
+								 $codigo = base64_encode($cliente->idCliente);								
 						 ?>
 								<tr>
-									<td align="center"><a href="cadCliente.php?tipo=CNS&idCliente=<?=$cliente->idCliente ?>">
+									<td align="center"><a href="cadCliente.php?tipo=<?=$tipo?>&idCliente=<?=$codigo?>">
 										 <span class="glyphicon glyphicon-search" aria-hidden="true" title="Consultar"></span>
 									</a></td>
 									<td align="center">
-									<a href="cadCliente.php?tipo=UPD&idCliente=<?=$cliente->idCliente ?>"">
-										 <span class="glyphicon glyphicon-pencil" aria-hidden="true" title="Alterar"></span>
+									<a href="cadCliente.php?tipo=<?=$tipo?>&idCliente=<?=$codigo?>">
+											 <span class="glyphicon glyphicon-pencil" aria-hidden="true" title="Alterar"></span>
 									</a></td>
 									<td align="center">
 									<input type="hidden" value="<?=$cliente->idCliente ?>" id="txtIdCliente"></input>
