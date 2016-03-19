@@ -62,10 +62,10 @@
 			$codigo = base64_encode($idUsuario);
 						
 			if ($endereco->idEndereco > 0){
-				$ok = $daoUsuario->alterarEndUsuario($endereco);
+				$ok = $daoUsuario->alterarEndUsuario($idUsuario,$endereco);
 			}
 			else {
-				$idEndereco = $daoUsuario->salvarEndUsuario($endereco);
+				$idEndereco = $daoUsuario->salvarEndUsuario($idUsuario,$endereco);
 				$usuario = $daoUsuario->getUsuario($idUsuario);
 				$ok = $daoUsuario->alterarUsuario($usuario,$idEndereco);
 			}

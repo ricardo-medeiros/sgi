@@ -2,7 +2,6 @@
 	define('__ROOT__',dirname(dirname(dirname(__FILE__))));
 	require_once(__ROOT__.'/controle/usuario.controle.php');
 	require_once(__ROOT__.'/modelo/endereco.model.php');
-	
 	$idUsuario = base64_decode($_GET['usuario']);//$_REQUEST["idUsuario"];	
 	$endereco = new Endereco_Model();
 	$controleUsuario = new Usuario_Controle();
@@ -17,16 +16,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>SGI-WEB</title>
+<title>Corretor(a)</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!--   <link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon"></link> -->
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="//code.jquery.com/jquery-2.2.1.min.js"></script>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
   <script type="text/javascript">
   	$(document).ready(function(){
+  		function limpa_formulario_cep() {
+            // Limpa valores do formulário de cep.
+            $("#txtRua").val("");
+            $("#txtBairro").val("");
+            $("#txtCidade").val("");
+            $("#txtUf").val("");
+        }
+        
   		$('img').attr('src', $('img').attr('src') + '?' + Math.random());
   		$('#alterar').click( function() {
     	    //check whether browser fully supports all File API
@@ -46,7 +54,53 @@
     	        alert("Por favor atualize seu navegador, depois repita a operação!");
     	    }
     	});     
+    	$("#txtCep").blur(function(){
+    		
+     		var cep = $(this).val().replace(/\D/g, '');
+     		
+     		if (cep != "") {     			
+         		   //Expressão regular para validar o CEP.
+                   var validacep = /^[0-9]{8}$/;
+
+                 //Valida o formato do CEP.
+                 if(validacep.test(cep)) {
+                    //Preenche os campos com "..." enquanto consulta webservice.
+                     $("#txtRua").val("...")
+                     $("#txtBairro").val("...")
+                     $("#txtCidade").val("...")
+                     $("#txtUf").val("...")
+
+//                     //Consulta o webservice viacep.com.br/
+                     $.getJSON("//viacep.com.br/ws/"+ cep +"/json/?callback=?", function(dados) {
+
+                         if (!("erro" in dados)) {
+                             //Atualiza os campos com os valores da consulta.
+                             $("#txtRua").val(dados.logradouro);
+                             $("#txtBairro").val(dados.bairro);
+                             $("#txtCidade").val(dados.localidade);
+                             $("#txtUf").val(dados.uf);
+                             $("#txtCep").val(dados.cep);
+                         } //end if.
+                        else {
+                            //CEP pesquisado não foi encontrado.
+                            //limpa_formulario_cep();
+                            alert("CEP nao encontrado.");
+                        }
+                     });
+                } //end if.
+                  else {
+                      //cep é inválido.
+                      limpa_formulario_cep();
+                      alert("Formato de CEP inválido.");
+                  }
+             } //end if.
+              else {
+                  //cep sem valor, limpa formulário.
+                  limpa_formulario_cep();
+              }
+    	});
   	});
+
   	
   	function Usuario(usuario){		
 		document.getElementById('txtIdUsuario').value = usuario;
@@ -105,7 +159,7 @@
 								  <div class="form-group">
 								    <label for="senhaUsuario" class="col-sm-2 control-label">Senha</label>
 								    <div class="col-sm-4">					      
-								      <input required  type="password" maxlength="10" name="senha" class="form-control" id="txtSenha" placeholder="Senha" value="<?=$usuario->senha ?>"">
+								      <input required  type="password" minlength="6" maxlength="10" name="senha" class="form-control" id="txtSenha" placeholder="Senha" value="<?=$usuario->senha ?>"">
 								    </div>
 								  </div>	  
 							  	  <div class="form-group">
@@ -186,7 +240,7 @@
 						 <div class="form-group">
 								<label for="cep" class="col-sm-2 control-label">CEP</label>
 								<div class="col-sm-2">
-									<input required maxlength="9" minlength="9" type="text" name="cep" class="form-control"
+									<input required maxlength="9" minlength="9" type="text" name="cep" class="form-control" pattern="[0-9]{5}-[0-9]{3}" 
 										id="txtCep" placeholder="Cep" value="<?=$endereco->cep ?>">
 								</div>
 								<span style="text-align: left" class="help-block">Formato: 00000-000</span>
@@ -194,7 +248,7 @@
 						 <div class="form-group">
 								<label for="rua" class="col-sm-2 control-label">Rua</label>
 								<div class="col-sm-8">
-									<input  required maxlength="200" minlength="1" type="text" name="rua" value="<?=$endereco->rua ?>"
+									<input  required maxlength="200" minlength="1" type="text"  name="rua" value="<?=$endereco->rua ?>"
 										class="form-control" id="txtRua" placeholder="Rua">
 								</div>
 						 </div>

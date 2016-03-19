@@ -48,7 +48,7 @@
 	        <li class="menu-item dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Cadastros<b class="caret"></b></a>
 	        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
 	            <li class="menu-item "><a href="cliente.php">Clientes</a></li>
-	            <li class="menu-item "><a href="imoveis.php">Imoveis</a></li>
+	            <li class="menu-item "><a href="imovel.php">Imoveis</a></li>
 	            <li class="menu-item "><a href="proprietario.php">Proprietarios</a></li>            
 	        </ul>
 	        <li><a href="contrato.php">Contratos</a></li>
@@ -69,7 +69,7 @@
 	      </ul>
 	    </div><!--/.nav-collapse -->
 	    <div class="bar-login" style="text-align: left; margin-left: 15px;">
-	      	 <span style="color: white; font-size: 11px;">Corretor(a): <?php echo $nome ?></span>
+	      	 <span class="glyphicon glyphicon-user" style="color: white;"></span><span style="color: white; font-size: 11px;"> Corretor(a): <?php echo $nome ?></span>
 	    </div>
 	  </div>
 	</div>     

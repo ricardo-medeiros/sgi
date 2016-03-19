@@ -46,7 +46,7 @@ class daoCliente{
 		$dao = new conexao();
 		$conn = $dao->conectar();
 	
-		$sql = "INSERT INTO endereco(rua, bairro,cidade,uf,cep) VALUES(:rua, :bairro, :cidade, :uf ,:cep)";
+		$sql = "INSERT INTO endereco(rua, bairro,cidade,uf,cep,idUsuario) VALUES(:rua, :bairro, :cidade, :uf ,:cep,:idUsuario)";
 	
 		$stmt = $conn->prepare($sql);
 	
@@ -55,6 +55,7 @@ class daoCliente{
 		$stmt->bindParam( ':cidade', $endereco->cidade );
 		$stmt->bindParam( ':uf', $endereco->uf );
 		$stmt->bindParam( ':cep', $endereco->cep );
+		$stmt->bindParam( ':idUsuario' , $_SESSION["USUARIO"]);
 	
 		$result = $stmt->execute();
 		$id = $conn->lastInsertId();
@@ -76,7 +77,7 @@ class daoCliente{
 		$dao = new conexao();
 		$conn = $dao->conectar();
 	
-		$sql = "UPDATE endereco set rua= :rua, bairro= :bairro, cidade= :cidade, uf= :uf, cep= :cep where idEndereco= :idEndereco";
+		$sql = "UPDATE endereco set rua= :rua, bairro= :bairro, cidade= :cidade, uf= :uf, cep= :cep, idUsuario= :idUsuario where idEndereco= :idEndereco";
 	
 		$stmt = $conn->prepare($sql);
 	
@@ -85,6 +86,7 @@ class daoCliente{
 		$stmt->bindParam( ':cidade', $endereco->cidade );
 		$stmt->bindParam( ':uf', $endereco->uf );
 		$stmt->bindParam( ':cep', $endereco->cep );
+		$stmt->bindParam( ':idUsuario' , $_SESSION["USUARIO"]);
 		$stmt->bindParam( ':idEndereco', $endereco->idEndereco );
 	
 		$result = $stmt->execute();

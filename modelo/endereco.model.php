@@ -9,7 +9,7 @@ class Endereco_Model{
 	public $uf;
 	public $cep;
 	//public $cliente;
-	//public $usuario;
+	public $usuario;
 	//public $proprietario;
 
 	
@@ -39,12 +39,12 @@ class Endereco_Model{
 	
 	/*public function setCliente($cliente){
 		$this->cliente = $cliente;
-	}
+	}*/
 	
 	public function setUsuario($usuario){
 		$this->usuario = $usuario;
 	}
-	
+	/*
 	public function setProprietario($proprietario){
 		$this->proprietario = $proprietario;
 	}*/
@@ -75,12 +75,12 @@ class Endereco_Model{
 	/*
 	public function getCliente(){
 		return $this->cliente;
-	}
+	}*/
 	
 	public function getUsuario(){
 		return $this->usuario;
 	}
-	
+	/*
 	public function getProprietario(){
 		return $this->proprietario;
 	}*/

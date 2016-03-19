@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>SGI-WEB</title>
+<title>Proprietario</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -16,8 +16,8 @@
                 include("../cabecalho/menu.php");
             ?>
         </div>
-        <div id="corpo" class="container" style="padding-top: 80px">
-            
+        <div id="corpo">
+            <object data="listaProprietario.php" type="text/html" style="display: block; border: none; height: 100vh; width: 100vw;"></object>
         </div>
         <div id="rodape">
             <?php

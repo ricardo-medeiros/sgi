@@ -1,8 +1,8 @@
 <?php 
 	define('__ROOT__',dirname(dirname(dirname(__FILE__))));
-	require_once(__ROOT__.'/controle/cliente.controle.php');
-	$controleCliente = new Cliente_Controle();
-	$lista = $controleCliente->listaCliente();
+	require_once(__ROOT__.'/controle/imovel.controle.php');
+	$controleImovel = new Imovel_Controle();
+	$lista = $controleImovel->listaImovel();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -10,7 +10,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Lista de Clientes</title>
+<title>Lista de Imoveis</title>
 <!-- <link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon"></link> -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css"	href="https://cdn.datatables.net/1.10.8/css/dataTables.bootstrap.min.css">
@@ -24,7 +24,7 @@
 	var x;
 	//
 	$(document).ready(function() {
-		$('#tbcliente').DataTable(
+		$('#tbimovel').DataTable(
 			{
 				"language" : {
 					"url" : "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json"
@@ -33,12 +33,12 @@
 			});			
 	});
 	 
-	function Cliente(cliente){		
-		document.getElementById('txtCliente').value = cliente;
+	function Imovel(imovel){		
+		document.getElementById('txtImovel').value = imovel;
 	}
 	
-	function redirecionaModal(cliente){
-		location.href='/sgi/controle/implCliente.php?tipo=DLT&idCliente='+cliente;
+	function redirecionaModal(imovel){
+		location.href='/sgi/controle/implImovel.php?tipo=DLT&idImovel='+imovel;
 	}
 </script>
 </head>
@@ -51,44 +51,51 @@
 			    	<?php $tipo   = base64_encode('INS');
 			    		  $codigo = base64_encode(0);
 			    	?>
-			    	<a href="cadCliente.php?tipo=<?=$tipo?>&idCliente=<?=$codigo?>"><button type="button" class="btn btn-success" data-dismiss="modal">Novo</button></a>&nbsp;
+			    	<a href="cadImovel.php?tipo=<?=$tipo?>&idImovel=<?=$codigo?>"><button type="button" class="btn btn-success" data-dismiss="modal">Novo</button></a>&nbsp;
 			    </td>
 				<td>							
-					<table id="tbcliente" class="table table-bordered table-hover table-striped" cellspacing="0" width="100%">
+					<table id="tbimovel" class="table table-bordered table-hover table-striped" cellspacing="0" width="100%">
 						<thead>
 							<tr>
 								<th width="10px"></th>
 								<th width="10px"></th>
 								<th width="10px"></th>							
 								<th width="40px">Codigo</th>
-								<th width="130px">CPF</th>
-								<th width="350px">Nome Cliente</th>
+								<th width="130px">Tipo</th>
+								<th width="150px">Situacao</th>
+								<th width="150px">Valor</th>
 							</tr>
 						</thead>
 
 						<tbody>
 						<?php 
-							foreach ((array)$lista as $cliente) {
+							foreach ((array)$lista as $imovel) {
 								 $tipo   = base64_encode('UPD');
 								 $tipo1  = base64_encode('CNS');
-								 $codigo = base64_encode($cliente->idCliente);								
+								 $codigo = base64_encode($imovel->idImovel);								
 						 ?>
 								<tr>
-									<td align="center"><a href="cadCliente.php?tipo=<?=$tipo1?>&idCliente=<?=$codigo?>">
+									<td align="center"><a href="cadImovel.php?tipo=<?=$tipo1?>&idImovel=<?=$codigo?>">
 										 <span class="glyphicon glyphicon-search" aria-hidden="true" title="Consultar"></span>
 									</a></td>
 									<td align="center">
-									<a href="cadCliente.php?tipo=<?=$tipo?>&idCliente=<?=$codigo?>">
+									<a href="cadImovel.php?tipo=<?=$tipo?>&idImovel=<?=$codigo?>">
 											 <span class="glyphicon glyphicon-pencil" aria-hidden="true" title="Alterar"></span>
 									</a></td>
 									<td align="center">
-									<input type="hidden" value="<?=$cliente->idCliente ?>" id="txtIdCliente"></input>
-									<a href="#"  id="usuModal" onclick="Cliente(<?=$cliente->idCliente ?>)" data-toggle="modal" data-target="#delete-modal">
+									<input type="hidden" value="<?=$imovel->idImovel ?>" id="txtIdImovel"></input>
+									<a href="#"  id="usuModal" onclick="Imovel(<?=$imovel->idImovel ?>)" data-toggle="modal" data-target="#delete-modal">
 										<span class="glyphicon glyphicon-remove" aria-hidden="true" title="Excluir" id="iconeExcluir"></span>
 									</a></td>								
-									<td align="center"><?php echo $cliente->idCliente ?></td>
-									<td><?php echo $cliente->cpf ?></td>
-									<td><?php echo $cliente->nome ?></td>								
+									<td align="center"><?php echo $imovel->idImovel ?></td>
+									<td><?php echo $imovel->tipo ?></td>
+									<?php if ($imovel->situacao == 'L') {$imovel->situacao = 'Livre';?>
+										<td><?php echo $imovel->situacao ?></td>
+									<?php }?>
+									<?php if ($imovel->situacao == 'O'){$imovel->situacao = 'Ocupado';?>
+										<td><?php echo $imovel->situacao ?></td>
+									<?php }?>
+									<td><?php echo $imovel->valor ?></td>								
 								</tr>		
 						<?php
 						}
@@ -115,8 +122,8 @@
         Deseja realmente excluir estes dados?
       </div>
       <div class="modal-footer">
-        <input type="hidden" id="txtCliente"></input>        
-        <button onclick="redirecionaModal(document.getElementById('txtCliente').value)" type="button" class="btn btn-success" data-dismiss="modal">Sim</button>
+        <input type="hidden" id="txtImovel"></input>        
+        <button onclick="redirecionaModal(document.getElementById('txtImovel').value)" type="button" class="btn btn-success" data-dismiss="modal">Sim</button>
 		<button type="button" class="btn btn-default" data-dismiss="modal">N&atilde;o</button>
       </div>
     </div>
