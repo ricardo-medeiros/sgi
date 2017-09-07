@@ -5,7 +5,6 @@ if (isset ( $_SESSION ["erroLogin"] )) {
 	$erro = $_SESSION ["erroLogin"];
 	session_unset ();
 	session_destroy ();
-	//teste
 }
 ?>
 <!DOCTYPE html>
