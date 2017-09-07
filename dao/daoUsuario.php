@@ -1,5 +1,6 @@
 <?php 
 	require_once(__ROOT__.'/modelo/usuario.model.php');
+	require_once(__ROOT__.'/modelo/usuario_documento.model.php');
 	require_once(__ROOT__.'/dao/conexao.php');
 		
 class daoUsuario{
@@ -12,7 +13,7 @@ class daoUsuario{
 		$dao = new conexao();
 		$conn = $dao->conectar();
 		
-		$sql = "INSERT INTO usuario(nome, login,cpf,status,senha,telefoneContato,caminhoLogo) VALUES(:nome, :login, :cpf, :status ,:senha, :telefoneContato, :caminhoLogo)";
+		$sql = "INSERT INTO usuario(nome, login,cpf,status,banco,agencia,conta,tipoConta,numeroCRA,numeroCRECI,senha,telefoneContato,caminhoLogo) VALUES(:nome, :login, :cpf, :status ,:banco, :agencia, :conta,:tipoConta,:numeroCRA,:numeroCRECI,:senha, :telefoneContato, :caminhoLogo)";
 		
 		$stmt = $conn->prepare($sql);
 		
@@ -20,6 +21,12 @@ class daoUsuario{
 		$stmt->bindParam( ':login', $usuario->login );
 		$stmt->bindParam( ':cpf', $usuario->cpf );
 		$stmt->bindParam( ':status', $usuario->status );
+		$stmt->bindParam( ':banco', $usuario->banco );
+		$stmt->bindParam( ':agencia', $usuario->agencia);
+		$stmt->bindParam( ':conta', $usuario->conta );
+		$stmt->bindParam( ':tipoConta', $usuario->tipoConta );
+		$stmt->bindParam( ':numeroCRA', $usuario->numeroCRA );
+		$stmt->bindParam( ':numeroCRECI', $usuario->numeroCRECI );
 		$stmt->bindParam( ':senha', $usuario->senha );
 		$stmt->bindParam( ':telefoneContato', $usuario->telefoneContato );
 		$stmt->bindParam( ':caminhoLogo', $usuario->caminhoLogo );
@@ -107,11 +114,11 @@ class daoUsuario{
 	
 		if ($usuario->caminhoLogo != null)
 		{
-			$sql = "UPDATE usuario set nome = :nome,cpf= :cpf, senha= :senha, telefoneContato= :telefoneContato, caminhoLogo= :caminhoLogo,idEndereco= :idEndereco where idUsuario = :idUsuario";
+			$sql = "UPDATE usuario set nome = :nome,cpf= :cpf, banco= :banco, agencia= :agencia, conta= :conta,tipoConta= :tipoConta,numeroCRA= :numeroCRA,numeroCRECI= :numeroCRECI, senha= :senha, telefoneContato= :telefoneContato, caminhoLogo= :caminhoLogo,idEndereco= :idEndereco where idUsuario = :idUsuario";
 		}
 		else 
 		{
-			$sql = "UPDATE usuario set nome = :nome,cpf= :cpf, senha= :senha, telefoneContato= :telefoneContato,idEndereco= :idEndereco where idUsuario = :idUsuario";
+			$sql = "UPDATE usuario set nome = :nome,cpf= :cpf, banco= :banco, agencia= :agencia, conta= :conta,tipoConta= :tipoConta,numeroCRA= :numeroCRA,numeroCRECI= :numeroCRECI, senha= :senha, telefoneContato= :telefoneContato,idEndereco= :idEndereco where idUsuario = :idUsuario";
 		}
 	
 		$stmt = $conn->prepare($sql);
@@ -120,6 +127,12 @@ class daoUsuario{
 		//$stmt->bindParam( ':login', $usuario->login );
 		$stmt->bindParam( ':cpf', $usuario->cpf );
 		//$stmt->bindParam( ':status', $usuario->status );
+		$stmt->bindParam( ':banco', $usuario->banco );
+		$stmt->bindParam( ':agencia', $usuario->agencia );
+		$stmt->bindParam( ':conta', $usuario->conta );
+		$stmt->bindParam( ':tipoConta', $usuario->tipoConta );
+		$stmt->bindParam( ':numeroCRA', $usuario->numeroCRA );
+		$stmt->bindParam( ':numeroCRECI', $usuario->numeroCRECI );		
 		$stmt->bindParam( ':senha', $usuario->senha);
 		$stmt->bindParam( ':telefoneContato', $usuario->telefoneContato );
 		if ($usuario->caminhoLogo != null)
@@ -127,7 +140,15 @@ class daoUsuario{
 			$stmt->bindParam( ':caminhoLogo', $usuario->caminhoLogo );
 		}
 		
-		$stmt->bindParam( ':idEndereco', $idEndereco );
+		if ($idEndereco > 0)
+		{
+			$stmt->bindParam( ':idEndereco', $idEndereco );
+		}
+		else 
+		{
+			$idEndereco = 0;
+			$stmt->bindParam( ':idEndereco', $idEndereco );
+		}
 		$stmt->bindParam( ':idUsuario', $usuario->idUsuario );
 	
 		$result = $stmt->execute();
@@ -161,6 +182,12 @@ class daoUsuario{
 			$usuario->login = $linha['login'];
 			$usuario->cpf = $linha['cpf'];
 			$usuario->status= $linha["status"];
+			$usuario->banco= $linha["banco"];
+			$usuario->agencia= $linha["agencia"];
+			$usuario->conta= $linha["conta"];
+			$usuario->tipoConta= $linha["tipoConta"];
+			$usuario->numeroCRA= $linha["numeroCRA"];
+			$usuario->numeroCRECI= $linha["numeroCRECI"];
 			$usuario->senha= $linha["senha"];
 			$usuario->telefoneContato = $linha["telefoneContato"];
 			$usuario->caminhoLogo = $linha["caminhoLogo"];
@@ -168,6 +195,126 @@ class daoUsuario{
 		}
 		
 		return $lista;
+	
+		$dao->desconectar();
+	}
+	
+	public function listaDocumetoUsuario($idUsuario){
+		$dao = new conexao();
+		$conn = $dao->conectar();
+	
+		$sql = "select * from usuario_documento where idUsuario = " .$idUsuario;
+	
+		$consulta = $conn->query($sql);
+		$lista = new ArrayObject();
+			
+		while ($linha = $consulta->fetch(PDO::FETCH_ASSOC)){
+			$usuario_documento = new Usuario_Documento_Model();
+			$usuario_documento->usuario = $linha['idUsuario'];
+			$usuario_documento->nome = $linha['nome'];
+			$usuario_documento->idDocumento = $linha['idDocumento'];
+			$usuario_documento->documento = $linha['documento'];
+			$usuario_documento->documentoPadrao = $linha['documentoPadrao'];
+			$lista->append($usuario_documento);
+		}
+	
+		return $lista;
+	
+		$dao->desconectar();
+	}
+	
+	public function getDocumetoUsuario($idUsuario,$idDocumento){
+		$dao = new conexao();
+		$conn = $dao->conectar();
+	
+		$sql = "select * from usuario_documento where idUsuario = " .$idUsuario. " and idDocumento = " .$idDocumento;
+	
+		$consulta = $conn->query($sql);
+		$consulta->execute();
+		$linha = $consulta->fetch(PDO::FETCH_ASSOC);
+
+		$usuario_documento = new Usuario_Documento_Model();
+		$usuario_documento->usuario = $linha['idUsuario'];
+		$usuario_documento->nome = $linha['nome'];
+		$usuario_documento->idDocumento = $linha['idDocumento'];
+		$usuario_documento->documento = $linha['documento'];
+		$usuario_documento->documentoPadrao = $linha['documentoPadrao'];
+
+		return $usuario_documento;
+	
+		$dao->desconectar();
+	}
+	
+	public function getDocumetoUsuarioPorNome($idUsuario,$nomeDocumento){
+		$dao = new conexao();
+		$conn = $dao->conectar();
+	
+		$sql = "select * from usuario_documento where idUsuario = " .$idUsuario. " and nome = '".$nomeDocumento. "'";
+	
+		$consulta = $conn->query($sql);
+		$consulta->execute();
+		$linha = $consulta->fetch(PDO::FETCH_ASSOC);
+	
+		$usuario_documento = new Usuario_Documento_Model();
+		$usuario_documento->usuario = $linha['idUsuario'];
+		$usuario_documento->nome = $linha['nome'];
+		$usuario_documento->idDocumento = $linha['idDocumento'];
+		$usuario_documento->documento = $linha['documento'];
+		$usuario_documento->documentoPadrao = $linha['documentoPadrao'];
+	
+		return $usuario_documento;
+	
+		$dao->desconectar();
+	}
+	
+	public function alterarDocumentoUsuario($usuario_documento){
+		$dao = new conexao();
+		$conn = $dao->conectar();
+	
+		$sql = "UPDATE usuario_documento set documento = :documento where idUsuario = :idUsuario and idDocumento = :idDocumento" ;
+	
+		$stmt = $conn->prepare($sql);
+	
+		$stmt->bindParam( ':documento', $usuario_documento->documento);
+		$stmt->bindParam( ':idUsuario', $usuario_documento->usuario );
+		$stmt->bindParam( ':idDocumento', $usuario_documento->idDocumento );
+		$result = $stmt->execute();
+	
+		if (!$result )
+		{
+			var_dump( $stmt->errorInfo() );
+			return false;
+		}
+		else
+		{
+			return true;
+		}
+	
+		$dao->desconectar();
+	}
+	
+	public function restaurarDocumentoUsuario($usuario_documento){
+		$dao = new conexao();
+		$conn = $dao->conectar();
+	
+		$sql = "UPDATE usuario_documento set documento = :documento where idUsuario = :idUsuario and idDocumento = :idDocumento" ;
+	
+		$stmt = $conn->prepare($sql);
+	
+		$stmt->bindParam( ':documento', $usuario_documento->documentoPadrao);
+		$stmt->bindParam( ':idUsuario', $usuario_documento->usuario );
+		$stmt->bindParam( ':idDocumento', $usuario_documento->idDocumento );
+		$result = $stmt->execute();
+	
+		if (!$result )
+		{
+			var_dump( $stmt->errorInfo() );
+			return false;
+		}
+		else
+		{
+			return true;
+		}
 	
 		$dao->desconectar();
 	}
@@ -211,6 +358,12 @@ class daoUsuario{
 		$usuario->login = $linha['login'];
 		$usuario->cpf = $linha['cpf'];
 		$usuario->status= $linha["status"];
+		$usuario->banco= $linha["banco"];
+		$usuario->agencia= $linha["agencia"];
+		$usuario->conta= $linha["conta"];	
+		$usuario->tipoConta= $linha["tipoConta"];
+		$usuario->numeroCRA= $linha["numeroCRA"];
+		$usuario->numeroCRECI= $linha["numeroCRECI"];
 		$usuario->senha= $linha["senha"];
 		$usuario->telefoneContato = $linha["telefoneContato"];
 		$usuario->caminhoLogo = $linha["caminhoLogo"];

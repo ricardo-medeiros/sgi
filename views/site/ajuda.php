@@ -3,7 +3,7 @@
 <head>
 <title>SGI-WEB</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-<meta charset="utf-8"/>
+<meta charset="iso-8859-1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!--   <link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon"></link> -->
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
@@ -27,6 +27,70 @@
     </body>
 </html>
 
+<!-- Teste de webservice wsdl da Fiocruz -->
+            <!--<?php 
+            
+	            class Lstmaterial{
+	            	public $lstMaterial;	            
+	            	public  $msgErro;
+	            }            
+	            
+	            $client = new SoapClient('http://homolog.almox.fiocruz.br/aServiceMat.aspx?WSDL');
+	            
+	            $function = 'Execute';
+	            
+	            $arguments= array('Execute' => array(
+	            		'Login'   => 'admin',
+	            		'Senha'   => '123',
+	            		'Matcod'  => 0,
+	            		'Mattp'   => 0,
+	            		'Matresdsc'   => 'copo',
+	            		'Matcntsiafini'   => 0,
+	            		'Matcntsiaffim'        => 0
+	            ));
+	            $options = array('location' => 'http://homolog.almox.fiocruz.br/aservicemat.aspx');
+	            
+	           	            
+	            $result = $client->__soapCall($function, $arguments, $options);
+	            
+	            echo 'Response: ';
+	            $mat = new Lstmaterial();
+	            $mat = $result;
+	            $material = 'lstMaterial.material';
+	            
+	            if (isset($result->Lstmaterial->$material->msgErro) <> '')
+	            {
+	            	echo $result->Lstmaterial->$material->msgErro;
+	            }
+	            else {
+
+		            $itens = Array();
+		            $itens = $result->Lstmaterial->$material;
+		            
+		            foreach ($itens as $item)
+		            {
+	
+		            	foreach ($item as $mat)
+		            	{
+		            		if (isset($mat->Mattp)){
+		            			echo "<br>". ($mat->Mattp) ." ";
+		            		}
+		            		if (isset($mat->MatCod)){
+		            			echo ($mat->MatCod) ." ";
+		            		}
+		            		if (isset($mat->MatResDsc)){
+		            			echo ($mat->MatResDsc) ." ";
+		            		}
+		            		if (isset($mat->MatUniMed)){
+		            			echo ($mat->MatUniMed) ." ";
+		            		}
+		            		if (isset($mat->MatCntSiafi)){
+		            			echo ($mat->MatCntSiafi) ." ";
+		            		}         	            			            		           
+		            	}
+		            }
+	            }	            
+            ?>-->
 <!-- 
 <html>
 <head>

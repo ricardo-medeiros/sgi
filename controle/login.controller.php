@@ -3,7 +3,7 @@
 	define('__ROOT__',dirname(dirname(__FILE__)));
 	require_once(__ROOT__.'/controle/usuario.controle.php');
 	
-	$_SESSION["INDEX"]  = "http://localhost:90/sgi/index.php";
+	$_SESSION["INDEX"]  = "http://sgi-web.com:90/index.php";
 	$login = $_POST["j_username"];
     $senha = $_POST["j_password"];
     
@@ -14,8 +14,8 @@
 	{
 		$_SESSION["NOME"]   = $usuario->nome;
 		$_SESSION["USUARIO"]= $usuario->idUsuario;
-		$_SESSION["SITE"]   = "http://localhost:90/sgi/views/site/principal.php";
-		$_SESSION["LOGOUT"] = "http://localhost:90/sgi/controle/logout.controller.php";
+		$_SESSION["SITE"]   = "http://sgi-web.com:90/views/site/principal.php";
+		$_SESSION["LOGOUT"] = "http://sgi-web.com:90/controle/logout.controller.php";
 		header('Location: ' .$_SESSION["SITE"]);
 	}
 	else
@@ -24,7 +24,7 @@
 		header('Location: ' .$_SESSION["INDEX"]);
 	}
 ?>
-
+<!-- 
 //<?php
 //	session_start();
 //	$_SESSION["INDEX"]  = "http://sgi-programasweb.rhcloud.com";
@@ -45,3 +45,4 @@
 //		header('Location: ' .$_SESSION["INDEX"]);
 //	}
 //?>
+ -->

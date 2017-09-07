@@ -13,12 +13,13 @@ class daoTipoDesconto{
 		$dao = new conexao();
 		$conn = $dao->conectar();
 		
-		$sql = "INSERT INTO tipoDesconto(descDesconto,idUsuario) VALUES(:descDesconto,:idUsuario)";
+		$sql = "INSERT INTO tipoDesconto(descDesconto,idUsuario,tipo) VALUES(:descDesconto,:idUsuario,:tipo)";
 		
 		$stmt = $conn->prepare($sql);
 		
 		$stmt->bindParam( ':descDesconto', $tipoDesconto->descDesconto );
 		$stmt->bindParam( ':idUsuario', $_SESSION["USUARIO"]);
+		$stmt->bindParam( ':tipo', $tipoDesconto->tipo);
 		
 		$result = $stmt->execute();
 		$id = $conn->lastInsertId();
@@ -42,12 +43,13 @@ class daoTipoDesconto{
 		$dao = new conexao();
 		$conn = $dao->conectar();
 	 
-		$sql = "UPDATE tipoDesconto set descDesconto = :descDesconto,idUsuario= :idUsuario where idTipoDesconto = :idTipoDesconto";
+		$sql = "UPDATE tipoDesconto set descDesconto = :descDesconto,idUsuario= :idUsuario, tipo= :tipo where idTipoDesconto = :idTipoDesconto";
 	
 		$stmt = $conn->prepare($sql);
 		
 		$stmt->bindParam( ':descDesconto', $tipoDesconto->descDesconto );
 		$stmt->bindParam( ':idUsuario', $_SESSION["USUARIO"] );
+		$stmt->bindParam( ':tipo', $tipoDesconto->tipo);
 		$stmt->bindParam( ':idTipoDesconto', $tipoDesconto->idTipoDesconto);
 	
 		$result = $stmt->execute();
@@ -78,6 +80,7 @@ class daoTipoDesconto{
 			$tipoDesconto = new Tipo_Desconto_Model();
 			$tipoDesconto->idTipoDesconto = $linha['idTipoDesconto'];
 			$tipoDesconto->descDesconto = $linha['descDesconto'];
+			$tipoDesconto->tipo = $linha['tipo'];
 			$lista->append($tipoDesconto);
 		}
 		
@@ -122,6 +125,7 @@ class daoTipoDesconto{
 		$tipoDesconto = new Tipo_Desconto_Model();
 		$tipoDesconto->idTipoDesconto = $linha['idTipoDesconto'];
 		$tipoDesconto->descDesconto = $linha['descDesconto'];
+		$tipoDesconto->tipo = $linha['tipo'];
 
 		return $tipoDesconto;
 	

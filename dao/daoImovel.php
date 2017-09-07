@@ -79,12 +79,13 @@ class daoImovel{
 		$dao = new conexao();
 		$conn = $dao->conectar();
 	
-		$sql = "INSERT INTO proprietario(nome, cpf,telefoneContato,email,idUsuario) VALUES(:nome, :cpf, :telefoneContato, :email ,:idUsuario)";
+		$sql = "INSERT INTO proprietario(nome, cpf,rg,telefoneContato,email,idUsuario) VALUES(:nome, :cpf, :rg, :telefoneContato, :email ,:idUsuario)";
 	
 		$stmt = $conn->prepare($sql);
 	
 		$stmt->bindParam( ':nome', $proprietario->nome );
 		$stmt->bindParam( ':cpf', $proprietario->cpf );
+		$stmt->bindParam( ':rg', $proprietario->rg );
 		$stmt->bindParam( ':telefoneContato', $proprietario->telefoneContato );
 		$stmt->bindParam( ':email', $proprietario->email );
 		$stmt->bindParam( ':idUsuario', $_SESSION["USUARIO"]);
@@ -140,12 +141,13 @@ class daoImovel{
 		$dao = new conexao();
 		$conn = $dao->conectar();
 	
-		$sql = "UPDATE proprietario set nome = :nome,cpf= :cpf, telefoneContato= :telefoneContato,email= :email , idUsuario= :idUsuario where idProprietario = :idProprietario";
+		$sql = "UPDATE proprietario set nome = :nome,cpf= :cpf,rg= :rg, telefoneContato= :telefoneContato,email= :email , idUsuario= :idUsuario where idProprietario = :idProprietario";
 		
 		$stmt = $conn->prepare($sql);
 	
 		$stmt->bindParam( ':nome', $proprietario->nome );
 		$stmt->bindParam( ':cpf', $proprietario->cpf );
+		$stmt->bindParam( ':rg', $proprietario->rg );
 		$stmt->bindParam( ':telefoneContato', $proprietario->telefoneContato );
 		$stmt->bindParam( ':email', $proprietario->email);	
 		$stmt->bindParam( ':idUsuario', $_SESSION["USUARIO"] );
@@ -244,6 +246,31 @@ class daoImovel{
 		$dao->desconectar();
 	}
 	
+	public function listaProprietarios(){
+		$dao = new conexao();
+		$conn = $dao->conectar();
+	
+		$sql = "select * from proprietario where idUsuario = " . $_SESSION["USUARIO"];
+	
+		$consulta = $conn->query($sql);
+		$lista = new ArrayObject();
+			
+		while ($linha = $consulta->fetch(PDO::FETCH_ASSOC)){
+			$proprietario                 = new Proprietario_Model();
+			$proprietario->idProprietario = $linha['idProprietario'];
+			$proprietario->cpf            = $linha['cpf'];
+			$proprietario->rg             = $linha['rg'];
+			$proprietario->nome           = $linha['nome'];
+			$proprietario->telefoneContato= $linha['telefoneContato'];
+			$proprietario->email          = $linha['email'];
+			$lista->append($proprietario);
+		}
+	
+		return $lista;
+	
+		$dao->desconectar();
+	}
+	
 	public function excluirImovel($idImovel){
 		$dao = new conexao();
 		$conn = $dao->conectar();
@@ -330,6 +357,7 @@ class daoImovel{
 		$proprietario->idProprietario = $linha['idProprietario'];
 		$proprietario->nome = $linha['nome'];
 		$proprietario->cpf = $linha['cpf'];
+		$proprietario->rg = $linha['rg'];
 		$proprietario->telefoneContato = $linha['telefoneContato'];
 		$proprietario->email= $linha["email"];
 	

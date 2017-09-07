@@ -11,15 +11,16 @@
 	if ($usuario->endereco > 0){
 		$endereco= $controleUsuario->getEndUsuario($usuario);
 	}						
-	
+	$codigo = base64_encode($idUsuario);
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <title>Corretor(a)</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-<meta charset="utf-8"/>
+<meta charset="iso-8859-1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <!--   <link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon"></link> -->
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -118,7 +119,7 @@
 			  <div class="panel-heading" style="text-align:center;">Cadastro de Corretor(a)</div>
 			  	<div class="panel-body">
 			  		<div class="text-center">		  		
-					    <form action="/sgi/controle/implUsuario.php" enctype="multipart/form-data" method="post" class="form-horizontal" data-toggle="validator" role="form" id="form">
+					    <form action="/controle/implUsuario.php" enctype="multipart/form-data" method="post" class="form-horizontal" data-toggle="validator" role="form" id="form">
 					    <table>
 					      <tr>
 					         <td style="width: 100%;">
@@ -132,6 +133,14 @@
 								      <a href="#" id="usuModal" data-toggle="modal" data-target="#endereco-modal">
 								      		<button type="button" onclick="Usuario(<?=$usuario->idUsuario ?>)" class="btn btn-primary" data-dismiss="modal">
 								      			<span class="glyphicon glyphicon-home" aria-hidden="true"></span> Visualizar							      		
+								      		</button>
+								      </a>
+								    </div>
+								    <label for="documentos" class="col-sm-1 control-label" style="padding-left: 50px;">Documentos</label>
+								    <div class="col-sm-1" style="padding-left: 70px;">					      
+								      <a href="documentos.php?idUsuario=<?=$codigo ?>" id="usuDoc">
+								      		<button type="button" class="btn btn-warning" data-dismiss="modal">
+								      			<span class="glyphicon glyphicon-file" aria-hidden="true"></span> Documentos							      		
 								      		</button>
 								      </a>
 								    </div>
@@ -159,13 +168,13 @@
 								  <div class="form-group">
 								    <label for="senhaUsuario" class="col-sm-2 control-label">Senha</label>
 								    <div class="col-sm-4">					      
-								      <input required  type="password" minlength="6" maxlength="10" name="senha" class="form-control" id="txtSenha" placeholder="Senha" value="<?=$usuario->senha ?>"">
+								      <input required  type="password" minlength="6" maxlength="10" name="senha" class="form-control" id="txtSenha" placeholder="Senha" value="<?=$usuario->senha ?>">
 								    </div>
 								  </div>	  
 							  	  <div class="form-group">
 								    <label for="telefoneCel" class="col-sm-2 control-label">Celular</label>
 								    <div class="col-sm-2">
-								      <input required maxlength="10" minlength="10" type="text" name="telefoneCelular"  class="form-control" id="txtCelular" placeholder="Tel. Celular" value="<?=$usuario->telefoneContato ?>"">
+								      <input required maxlength="10" minlength="10" type="text" name="telefoneCelular"  class="form-control" id="txtCelular" placeholder="Tel. Celular" value="<?=$usuario->telefoneContato ?>">
 								    </div>
 								  </div>					  			  								 
 								  <div class="form-group">				 					  				  
@@ -183,12 +192,85 @@
 										  </select>
 									  </div>
 							  	 </div>
-							  	 <div class="form-group">
-								    <label for="imagemLogo" class="col-sm-2 control-label">Logo Corretor(a)</label>
-								    <div class="col-sm-4">
-								      <input   required class="file" accept="image/gif, image/jpeg, image/png" type="file" name="caminhoLogo" id="imgLogo" value="<?=$usuario->caminhoLogo ?>">
+							  <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+								  <div class="panel panel-info" style="width: 91%; margin-left: 50px;">
+								    <div class="panel-heading" role="tab" id="headingOne">
+								      <h4 class="panel-title" align="left">
+								        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+								          <span class="glyphicon glyphicon-download" aria-hidden="true" title="Preencher"></span> Dados bancarios
+								        </a>
+								      </h4>
 								    </div>
-								 </div>			
+								    <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+								      <div class="panel-body">
+								          <div class="form-group">
+										    <label for="bancoUsu" class="col-sm-2 control-label">Banco</label>
+										    <div class="col-sm-4">
+										      <input required maxlength="50" minlength="3" type="text" name="banco"  class="form-control" id="txtBanco" placeholder="Nome do Banco para deposito" value="<?=$usuario->banco ?>">
+										    </div>
+										 </div>	
+										 <div class="form-group">
+										    <label for="agenciaUsu" class="col-sm-2 control-label">Agencia</label>
+										    <div class="col-sm-2">
+										      <input required maxlength="10" minlength="5" type="text" name="agencia"  class="form-control" id="txtAgencia" placeholder="0000-0" value="<?=$usuario->agencia ?>">
+										    </div>
+										 </div>	
+										 <div class="form-group">
+										    <label for="contaUsu" class="col-sm-2 control-label">Conta</label>
+										    <div class="col-sm-2">
+										      <input required maxlength="10" minlength="5" type="text" name="conta"  class="form-control" id="txtConta" placeholder="0000000-0" value="<?=$usuario->conta ?>">
+										    </div>
+										 </div>		
+										 <div class="form-group">
+										    <label for="tipoContaUsu" class="col-sm-2 control-label">Tipo Conta</label>
+										    <div class="col-sm-3">
+										      <select class="form-control"  name="tipoConta">
+				 						  	   <?php if ($usuario->tipoConta == 'Corrente') {?> 
+										    	<option value="Corrente">Corrente</option>
+										    	<option value="Poupanca">Poupanca</option>					    	
+				 							   <?php }?>
+											   <?php if ($usuario->tipoConta == 'Poupanca') {?> 
+										    	<option value="Poupanca">Poupanca</option> 
+			 							    	<option value="Corrente">Corrente</option>					    	 
+			 								   <?php }?>
+											  </select>										      
+										    </div>
+										 </div>	
+								      </div>
+								    </div>
+								  </div>
+								  <div class="panel panel-success" style="width: 91%; margin-left: 50px;">
+								    <div class="panel-heading" role="tab" id="headingTwo">
+								      <h4 class="panel-title" align="left">
+								        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+								          <span class="glyphicon glyphicon-download" aria-hidden="true" title="Preencher"></span> Extras
+								        </a>
+								      </h4>
+								    </div>
+								    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+								      <div class="panel-body">
+								         <div class="form-group">
+										    <label for="numeroCRA" class="col-sm-2 control-label">Numero CRA</label>
+										    <div class="col-sm-4">
+										      <input required maxlength="20" minlength="5" type="text" name="numeroCRA"  class="form-control" id="txtNumeroCRA" placeholder="Ex: CRA-RJ 000000" value="<?=$usuario->numeroCRA ?>">
+										    </div>
+										 </div>	
+										 <div class="form-group">
+										    <label for="numeroCRECI" class="col-sm-2 control-label">Numero CRECI</label>
+										    <div class="col-sm-4">
+										      <input required maxlength="20" minlength="5" type="text" name="numeroCRECI"  class="form-control" id="txtNumeroCRECI" placeholder="Ex: CRECI-RJ 000000" value="<?=$usuario->numeroCRECI ?>">
+										    </div>
+										 </div>									 								 							 
+									  	 <div class="form-group">
+										    <label for="imagemLogo" class="col-sm-2 control-label">Logotipo</label>
+										    <div class="col-sm-4">
+										      <input class="file" accept="image/gif, image/jpeg, image/png" type="file" name="caminhoLogo" id="imgLogo" value="<?=$usuario->caminhoLogo ?>">
+										    </div>
+										 </div>			
+								      </div>
+								    </div>
+								  </div>
+							     </div>									  	 							  	 								 
 						  		<div>
 			 						<button type="submit" id="alterar" name="alterar" class="btn btn-success" value="Alterar">Alterar</button>  
 						  		</div>
@@ -201,11 +283,11 @@
 					  	</table>
 					  		<input type="hidden" name="idUsuario" value="<?=$usuario->idUsuario ?>"></input>
 					  		<input type="hidden" name="txtIdEndereco" value="<?=$endereco->idEndereco ?>" id="txtIdEndereco" >
+					  		<input type="hidden" name="txtLogotipo" value="<?=$usuario->caminhoLogo ?>" id="txtLogotipo" >
 					  </form>			  
 		 			</div>  
 				 </div>
 			  </div>
-			</div>
         </div>
         <div id="rodape">
             <?php
@@ -217,7 +299,7 @@
 		aria-labelledby="modalLabel" style="margin-top: 80px;">
 		<div class="modal-dialog modal-sm" role="document" style="width:800px;">
 			<div class="modal-content">
-				<form action="/sgi/controle/implUsuario.php"  method="POST" id="form2" class="form-horizontal" data-toggle="validator" role="form">
+				<form action="/controle/implUsuario.php"  method="POST" id="form2" class="form-horizontal" data-toggle="validator" role="form">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal"
 							aria-label="Fechar">

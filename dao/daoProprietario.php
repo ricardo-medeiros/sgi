@@ -13,12 +13,13 @@ class daoProprietario{
 		$dao = new conexao();
 		$conn = $dao->conectar();
 		
-		$sql = "INSERT INTO proprietario(nome,cpf,telefoneContato,email,idUsuario) VALUES(:nome, :cpf, :telefoneContato, :email, :idUsuario)";
+		$sql = "INSERT INTO proprietario(nome,cpf,rg,telefoneContato,email,idUsuario) VALUES(:nome, :cpf, :rg,:telefoneContato, :email, :idUsuario)";
 		
 		$stmt = $conn->prepare($sql);
 		
 		$stmt->bindParam( ':nome', $proprietario->nome );
 		$stmt->bindParam( ':cpf', $proprietario->cpf );
+		$stmt->bindParam( ':rg', $proprietario->rg );
 		$stmt->bindParam( ':telefoneContato', $proprietario->telefoneContato );
 		$stmt->bindParam( ':email', $proprietario->email );
 		$stmt->bindParam( ':idUsuario', $_SESSION["USUARIO"]);
@@ -38,11 +39,11 @@ class daoProprietario{
 		$dao->desconectar();
 	}
 	
-	/*public function salvarEndUsuario($endereco){
+	public function salvarEndProprietario($endereco){
 		$dao = new conexao();
 		$conn = $dao->conectar();
 	
-		$sql = "INSERT INTO endereco(rua, bairro,cidade,uf,cep) VALUES(:rua, :bairro, :cidade, :uf ,:cep)";
+		$sql = "INSERT INTO endereco(rua, bairro,cidade,uf,cep,idUsuario) VALUES(:rua, :bairro, :cidade, :uf ,:cep,:idUsuario)";
 	
 		$stmt = $conn->prepare($sql);
 	
@@ -51,6 +52,7 @@ class daoProprietario{
 		$stmt->bindParam( ':cidade', $endereco->cidade );
 		$stmt->bindParam( ':uf', $endereco->uf );
 		$stmt->bindParam( ':cep', $endereco->cep );
+		$stmt->bindParam( ':idUsuario', $_SESSION["USUARIO"]);
 	
 		$result = $stmt->execute();
 		$id = $conn->lastInsertId();
@@ -68,11 +70,11 @@ class daoProprietario{
 		$dao->desconectar();
 	}
 	
-	public function alterarEndUsuario($endereco){
+	public function alterarEndProprietario($endereco){
 		$dao = new conexao();
 		$conn = $dao->conectar();
 	
-		$sql = "UPDATE endereco set rua= :rua, bairro= :bairro, cidade= :cidade, uf= :uf, cep= :cep where idEndereco= :idEndereco";
+		$sql = "UPDATE endereco set rua= :rua, bairro= :bairro, cidade= :cidade, uf= :uf, cep= :cep,idUsuario= :idUsuario where idEndereco= :idEndereco";
 	
 		$stmt = $conn->prepare($sql);
 	
@@ -81,6 +83,7 @@ class daoProprietario{
 		$stmt->bindParam( ':cidade', $endereco->cidade );
 		$stmt->bindParam( ':uf', $endereco->uf );
 		$stmt->bindParam( ':cep', $endereco->cep );
+		$stmt->bindParam( ':idUsuario', $_SESSION["USUARIO"]);
 		$stmt->bindParam( ':idEndereco', $endereco->idEndereco );
 	
 		$result = $stmt->execute();
@@ -96,22 +99,24 @@ class daoProprietario{
 		}
 	
 		$dao->desconectar();
-	}*/
+	}
 	
-	//public function alterarProprietario($proprietario,$idEndereco){
-	  public function alterarProprietario($proprietario){
+	public function alterarProprietario($proprietario,$idEndereco){
+	  //public function alterarProprietario($proprietario){
 		$dao = new conexao();
 		$conn = $dao->conectar();
 	 
-		$sql = "UPDATE proprietario set nome = :nome,cpf= :cpf, telefoneContato= :telefoneContato,email= :email , idUsuario= :idUsuario where idProprietario = :idProprietario";
+		$sql = "UPDATE proprietario set nome = :nome,cpf= :cpf,rg= :rg, telefoneContato= :telefoneContato,email= :email , idUsuario= :idUsuario,idEndereco= :idEndereco where idProprietario = :idProprietario";
 	
 		$stmt = $conn->prepare($sql);
 		
 		$stmt->bindParam( ':nome', $proprietario->nome );
 		$stmt->bindParam( ':cpf', $proprietario->cpf );
+		$stmt->bindParam( ':rg', $proprietario->rg );
 		$stmt->bindParam( ':telefoneContato', $proprietario->telefoneContato );
 		$stmt->bindParam( ':email', $proprietario->email);	
 		$stmt->bindParam( ':idUsuario', $_SESSION["USUARIO"] );
+		$stmt->bindParam( ':idEndereco', $idEndereco );
 		$stmt->bindParam( ':idProprietario', $proprietario->idProprietario );
 	
 		$result = $stmt->execute();
@@ -143,6 +148,7 @@ class daoProprietario{
 			$proprietario->idProprietario = $linha['idProprietario'];
 			$proprietario->nome = $linha['nome'];
 			$proprietario->cpf = $linha['cpf'];
+			$proprietario->rg = $linha["rg"];
 			$proprietario->telefoneContato = $linha["telefoneContato"];
 			$proprietario->email = $linha["email"];
 			$lista->append($proprietario);
@@ -190,19 +196,21 @@ class daoProprietario{
 		$proprietario->idProprietario = $linha['idProprietario'];
 		$proprietario->nome = $linha['nome'];
 		$proprietario->cpf = $linha['cpf'];
+		$proprietario->rg = $linha["rg"];
 		$proprietario->telefoneContato = $linha["telefoneContato"];
 		$proprietario->email = $linha["email"];
+		$proprietario->endereco = $linha["idEndereco"];
 
 		return $proprietario;
 	
 		$dao->desconectar();
 	}
-	/*
-	public function getEndUsuario($usuario){
+	
+	public function getEndProprietario($proprietario){
 		$dao = new conexao();
 		$conn = $dao->conectar();
 	
-		$sql = "select * from endereco where idEndereco =" .$usuario->endereco;
+		$sql = "select * from endereco where idEndereco =" .$proprietario->endereco;
 	
 		$consulta = $conn->query($sql);
 		$consulta->execute();
@@ -220,7 +228,7 @@ class daoProprietario{
 	
 		$dao->desconectar();
 	}
-	*/
+	
 	public function getProprietarioCPF($cpf){
 		$dao = new conexao();
 		$conn = $dao->conectar();
@@ -238,25 +246,5 @@ class daoProprietario{
 	
 		$dao->desconectar();
 	}
-	/*
-	public function efetuarLogin($login,$senha){
-		$dao = new conexao();
-		$conn = $dao->conectar();
-	
-		$sql = "select * from usuario where login ='" .$login ."' and senha='" .$senha ."'";
-		
-		$consulta = $conn->prepare($sql);
-		$consulta->execute();
-		$linha = $consulta->fetch(PDO::FETCH_ASSOC);
-	
-		$usuario = new Usuario_Model();
-		$usuario->idUsuario = $linha['idUsuario'];
-		$usuario->nome = $linha['nome'];
-		$usuario->cpf  = $linha['cpf'];
-		
-		return $usuario;
-	
-		$dao->desconectar();
-	}*/
 }	
 ?>

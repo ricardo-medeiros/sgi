@@ -133,6 +133,13 @@
   			header("Location: ../views/site/imovel.php");
 		}
 		
+		function listaProprietarios()
+		{
+			$daoImovel = new daoImovel();
+			$listaProprietario = $daoImovel->listaProprietarios();
+			return $listaProprietario;
+		}
+		
 		function getEstados(){
 		  		   
 		   $estados = array();

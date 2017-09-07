@@ -5,42 +5,41 @@
 	$mail = new PHPMailer();
 	$mail->SetLanguage('br');
 	
-	$assunto = 'O ASSUNTO DO EMAIL';
+	$assunto = 'RecuperaÃ§Ã£o de Senha de Acesso - SIGIMOBIL';
 	$mensagem = 'A MENSAGEM DO EMAIL. PODE SER HTML.';
-	//$seu_email = 'jckadinho@gmail.com';
-	$seu_email = 'atendimento@sgi-web.pe.hu';
-	$seu_nome = 'Ricardo Medeiros';
-	//$sua_senha = 'rick3332';
-	$sua_senha = '8DIPO6sbSK';
+	$seu_email = 'suporte@sigimobil.com.br';
+	$seu_nome = 'SIGIMOBIL - Sistema de Gerenciamento ImobiliÃ¡rio';
+	$sua_senha = 'suporte@2017';
 	
-	/* Se for do Gmail o servidor é: smtp.gmail.com */
-	$host_do_email = 'mx1.hostinger.com.br';
+	/* Se for do Gmail o servidor ï¿½: smtp.gmail.com */
+	$host_do_email = 'br648.hostgator.com.br';
 	
-	/* Configura os destinatários (pra quem vai o email) */
-	$mail->AddAddress('jcricardomedeiros@gmail.com', 'Ricardo Teste');
+	/* Configura os destinatï¿½rios (pra quem vai o email) */
+	$destino = $_POST["txtEmail"];
+	$mail->AddAddress($destino);
 	// $mail->AddAddress('email@email.com');
 	// $mail->AddCC('email@email.com', 'Nome da pessoa'); // Copia
-	// $mail->AddBCC('email@email.com', 'Nome da pessoa'); // Cópia Oculta
+	// $mail->AddBCC('email@email.com', 'Nome da pessoa'); // Cï¿½pia Oculta
 	
 	/* ###########################
-	 * # CONFIGURAÇÕES AVANÇADAS #
+	 * # CONFIGURAï¿½ï¿½ES AVANï¿½ADAS #
 	* ###########################
 	*/
 	
 	$mail->SMTPDebug = 1;
-	/* Define que é uma conexão SMTP */
+	/* Define que ï¿½ uma conexï¿½o SMTP */
 	$mail->IsSMTP();
-	/* Define o endereço do servidor de envio */
+	/* Define o endereï¿½o do servidor de envio */
 	$mail->Host = $host_do_email;
-	/* Utilizar autenticação SMTP */
+	/* Utilizar autenticaï¿½ï¿½o SMTP */
 	$mail->SMTPAuth = true;
-	/* Protocolo da conexão */
+	/* Protocolo da conexï¿½o */
 	$mail->SMTPSecure = "ssl";
-	/* Porta da conexão */
-	$mail->Port = "587";
-	/* Email ou usuário para autenticação */
+	/* Porta da conexï¿½o */
+	$mail->Port = "465";
+	/* Email ou usuï¿½rio para autenticaï¿½ï¿½o */
 	$mail->Username = $seu_email;
-	/* Senha do usuário */
+	/* Senha do usuï¿½rio */
 	$mail->Password = $sua_senha;
 	
 	/* Configura os dados do remetente do email */
@@ -71,12 +70,16 @@
 	$mail->ClearAllRecipients();
 	$mail->ClearAttachments();
 	
-	/* Mostra se o email foi enviado ou não */
+	/* Mostra se o email foi enviado ou nï¿½o */
 	if ($email_enviado) {
-		//echo "Email enviado!";
-		header("Location: http://localhost:90/sgi/index.php");
+		//echo "Email enviado!";		
+		//echo "<script type='text/javascript' language='javascript'>
+		//		alert('E-mail enviado com sucesso');
+		//		window.top.location.href = '/index.php';
+		//	  </script>";
+		header("Location: http://sgi-web.com:90/index.php");
 	} else {
-		echo "Não foi possível enviar o e-mail.<br /><br />";
-		echo "<b>Informações do erro:</b> <br />" . $mail->ErrorInfo;
+		echo "NÃ£o foi possÃ­vel enviar o e-mail.<br /><br />";
+		echo "<b>InformaÃ§Ãµes do erro:</b> <br />" . $mail->ErrorInfo;
 	}
 ?>

@@ -7,7 +7,7 @@
 	
 	if ($ok){
 		echo "<script type='text/javascript' language='javascript'>
-				window.top.location.href = '/sgi/index.php';
+				window.top.location.href = '/index.php';
 			  </script>";
 	}
 	
@@ -17,23 +17,79 @@
 	//$idCliente = $_REQUEST["idCliente"];
 	$idProprietario = base64_decode($_GET['idProprietario']);
 	$proprietario = $controleProprietario->getProprietario($idProprietario);
-	//$endereco = new Endereco_Model();
+	$endereco = new Endereco_Model();
 	$estados = $controleProprietario->getEstados();
-	//if ($cliente->endereco > 0){
-	//	$endereco= $controleCliente->getEndCliente($cliente);
-	//}
+	if ($proprietario->endereco > 0){
+		$endereco= $controleProprietario->getEndProprietario($proprietario);
+	}
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <title>Cadastro de Proprietario</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta charset="utf-8" />
+<meta charset="iso-8859-1" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="//code.jquery.com/jquery-2.2.1.min.js"></script>
 <script	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 <script type="text/javascript" language="javascript">
+	$(document).ready(function(){
+		function limpa_formulario_cep() {
+	    // Limpa valores do formulário de cep.
+	    $("#txtRua").val("");
+	    $("#txtBairro").val("");
+	    $("#txtCidade").val("");
+	    $("#txtUf").val("");
+		}
+	    
+		$("#txtCep").blur(function(){
+		
+			var cep = $(this).val().replace(/\D/g, '');
+			
+			if (cep != "") {     			
+	 		   //Expressão regular para validar o CEP.
+	           var validacep = /^[0-9]{8}$/;
+	
+	         //Valida o formato do CEP.
+	         if(validacep.test(cep)) {
+	            //Preenche os campos com "..." enquanto consulta webservice.
+	             $("#txtRua").val("...")
+	             $("#txtBairro").val("...")
+	             $("#txtCidade").val("...")
+	             $("#txtUf").val("...")
+	
+	             //Consulta o webservice viacep.com.br/
+	             $.getJSON("//viacep.com.br/ws/"+ cep +"/json/?callback=?", function(dados) {
+	
+	                 if (!("erro" in dados)) {
+	                     //Atualiza os campos com os valores da consulta.
+	                     $("#txtRua").val(dados.logradouro);
+	                     $("#txtBairro").val(dados.bairro);
+	                     $("#txtCidade").val(dados.localidade);
+	                     $("#txtUf").val(dados.uf);
+	                     $("#txtCep").val(dados.cep);
+	                 } //end if.
+	                else {
+	                    //CEP pesquisado não foi encontrado.
+	                    //limpa_formulario_cep();
+	                    alert("CEP nao encontrado.");
+	                }
+	             });
+	        } //end if.
+	          else {
+	              //cep é inválido.
+	              limpa_formulario_cep();
+	              alert("Formato de CEP inválido.");
+	          }
+	     } //end if.
+	      else {
+	          //cep sem valor, limpa formulário.
+	          limpa_formulario_cep();
+	      }
+		});
+	});
 	function Proprietario(proprietario){		
 		document.getElementById('txtIdProprietario').value = proprietario;
 	}
@@ -54,7 +110,7 @@
 		  	<div class="panel-body">
 		  		<div class="text-center">		  		
 				    <!-- <form action="/sgi/controle/implCliente.php" method="post" class="form-horizontal" data-toggle="validator" role="form" id="form"> -->
-				    <form action="/sgi/controle/implProprietario.php" method="post" class="form-horizontal" data-toggle="validator" role="form" id="form">
+				    <form action="/controle/implProprietario.php" method="post" class="form-horizontal" data-toggle="validator" role="form" id="form">
 							  <div class="form-group">							  
 							    <label for="cod" class="col-sm-2 control-label">Codigo</label>
 							    <div class="col-sm-2">
@@ -62,14 +118,14 @@
 							    </div>
 							     
 							    <?php if ($tipo != 'INS') {?> 
-							    	<!--<label for="enderecos" class="col-sm-1 control-label">Endereco</label>
+							    	<label for="enderecos" class="col-sm-1 control-label">Endereco</label>
 								    <div class="col-sm-1">					      
 								      <a href="#" id="usuModal" data-toggle="modal" data-target="#endereco-modal">
-								      		<button type="button" onclick="Cliente(<?=$cliente->idCliente ?>)" class="btn btn-primary" data-dismiss="modal">
+								      		<button type="button" onclick="Proprietario(<?=$proprietario->idProprietario ?>)" class="btn btn-primary" data-dismiss="modal">
 								      			<span class="glyphicon glyphicon-home" aria-hidden="true"></span> Visualizar							      		
 								      		</button>
 								      </a>
-								    </div> -->
+								    </div> 
 								<?php }?> 
 							  </div>
 							  <div class="form-group">
@@ -78,7 +134,13 @@
 							      <input required maxlength="11" minlength="11" type="text" name="cpf" class="form-control" id="txtCpf" placeholder="CPF" value="<?=$proprietario->cpf ?>">
 							    </div>
 							    <span id="erroMsgCpf" style="text-align: left;color: red; display: none;">CPF já existe, favor informar outro CPF!</span>
-							  </div>						  
+							  </div>			
+							  <div class="form-group">
+							    <label for="rgProprietario" class="col-sm-2 control-label">RG</label>
+							    <div class="col-sm-2">
+							      <input required maxlength="11" minlength="8" type="text" name="rg" class="form-control" id="txtRg" placeholder="RG" value="<?=$proprietario->rg ?>"">
+							    </div>
+							  </div>				  
 							  <div class="form-group">
 							    <label for="nomeProprietario" class="col-sm-2 control-label">Nome</label>
 							    <div class="col-sm-6">
@@ -107,8 +169,8 @@
 						<?php }?>
 						<a href="#" onclick="Fechar()"><button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button></a>
 				  		</div>
-				  		<input type="hidden" name="idProprietario" value="<?=$proprietario->idProprietario ?>"></input>
-				  		<!-- <input type="hidden" name="txtIdEndereco" value="<?=$endereco->idEndereco ?>" id="txtIdEndereco" > -->
+				  		<input type="hidden" name="idProprietario" id="idProprietario" value="<?=$proprietario->idProprietario ?>"></input>
+				  		<input type="hidden" name="txtIdEndereco" value="<?=$proprietario->endereco ?>" id="txtIdEndereco" > 
 				  </form>			  
 	 			</div>  
 			 </div>
@@ -126,24 +188,21 @@
 		aria-labelledby="modalLabel" style="margin-top: 80px;">
 		<div class="modal-dialog modal-sm" role="document" style="width:800px;">
 			<div class="modal-content">
-				<form action="/sgi/controle/implCliente.php" method="POST" id="form2" class="form-horizontal" data-toggle="validator" role="form">
+				<form action="/controle/implProprietario.php" method="POST" id="form2" class="form-horizontal" data-toggle="validator" role="form">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal"
 							aria-label="Fechar">
 							<span aria-hidden="true">&times;</span>
 						</button>
-						<h4 class="modal-title" id="modalLabel">Endereco do Cliente</h4>
+						<h4 class="modal-title" id="modalLabel">Endereco do Proprietario</h4>
 					</div>
 					<div class="modal-body">				
-						 <!-- <label class="control-label">Selecionar Arquivo</label><br/>
-						 <input required id="input-1" type="file" name="uploadFile" class="file" accept="image/gif, image/jpeg, image/png"> 
-						 <input type="hidden" id="txtPagina" name="txtPagina" /> -->
 						 <div class="form-group">
 						    <label for="cod" class="col-sm-2 control-label">Codigo</label>
 						    <div class="col-sm-2">
 						      <input type="text" name="idEndereco" value="<?=$endereco->idEndereco ?>" class="form-control" id="idEndereco" placeholder="" disabled>
 						      <input type="hidden" name="txtIdEndereco" value="<?=$endereco->idEndereco ?>" id="txtIdEndereco" >
-						      <input type="hidden" name="txtIdCliente" id="txtIdCliente">
+						      <input type="hidden" name="txtIdProprietario" id="txtIdProprietario">
 						    </div>
 						 </div>		
 						 <div class="form-group">

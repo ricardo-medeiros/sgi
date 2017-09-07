@@ -11,7 +11,7 @@
 	}
 	else 
 	{
-		$nome = $_SESSION["NOME"];
+		$nome = $_SESSION["NOME"];		
 	}
 
 	$_SESSION['LAST_REQUEST'] = time();	
@@ -21,9 +21,9 @@
 <head>
 <title>SGI-WEB</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-<meta charset="utf-8"/>
+<meta charset="iso-8859-1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
@@ -49,7 +49,9 @@
 	        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
 	            <li class="menu-item "><a href="cliente.php">Clientes</a></li>
 	            <li class="menu-item "><a href="imovel.php">Imoveis</a></li>
-	            <li class="menu-item "><a href="proprietario.php">Proprietarios</a></li>            
+	            <li class="menu-item "><a href="proprietario.php">Proprietarios</a></li>
+	            <li class="menu-item "><a href="fiador.php">Fiadores</a></li>
+	            <li class="menu-item "><a href="tipodesconto.php">Tipos de Descontos</a></li>              
 	        </ul>
 	        <li><a href="contrato.php">Contratos</a></li>
 	        <li class="menu-item dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Financeiro<b class="caret"></b></a>

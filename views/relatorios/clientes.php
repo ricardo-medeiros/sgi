@@ -8,6 +8,7 @@
 	
 	$controleCliente = new Cliente_Controle();
  	$lista = $controleCliente->listaCliente();
+ 	//$teste = $_GET["teste"]; aqui representa os parametros
 
  	$table .= '
  		<br/><br/>	
@@ -47,7 +48,7 @@ $html = '
 			</td>
 			<td>
 				<h3>
-					<a name="top"></a>Relat&oacute;rio de Clientes
+					<a name="top"></a>Relat&oacute;rio de Clientes 
 				</h3>		
 			</td>
 		</tr>
@@ -57,6 +58,7 @@ $html = '
 
 	include ('../MPDF57/mpdf.php'); 
 	$mpdf = new mPDF (); 
+	$mpdf->charset_in='iso-8859-1';	
 	$mpdf->WriteHTML ( $html ); 
 	$mpdf->Output (); 
 	exit (); 

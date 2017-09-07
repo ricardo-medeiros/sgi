@@ -3,7 +3,7 @@
 class Cliente_Model{
 	
 	public $idCliente;
-	public $cpf;
+	public $cpf; //cpf ou CNPJ
 	public $nome;
 	public $rg;
 	public $dataNascimento;
@@ -14,6 +14,7 @@ class Cliente_Model{
 	public $caminhoFoto;
 	public $endereco;
 	public $usuario;
+	public $tipo; // pessoa fisica ou juridica
 
 	
 	public function setIdCliente($idCliente){
@@ -54,6 +55,10 @@ class Cliente_Model{
 	
 	public function setCaminhoFoto($caminhoFoto){
 		$this->caminhoFoto = $caminhoFoto;
+	}
+	
+	public function setTipo($tipo){
+		$this->tipo = $tipo;
 	}
 	
 	public function setEndereco($endereco){
@@ -102,6 +107,10 @@ class Cliente_Model{
 	
 	public function getCaminhoFoto(){
 		return $this->caminhoFoto;
+	}
+	
+	public function getTipo(){
+		return $this->tipo;
 	}
 	
 	public function getEndereco(){

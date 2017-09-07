@@ -32,6 +32,7 @@
 		$proprietario->nome = $_POST["nome"];
 		$proprietario->email= $_POST["emailProprietario"];
 		$proprietario->cpf = $_POST["cpf"];
+		$proprietario->rg = $_POST["rg"];
 		$proprietario->telefoneContato = $_POST["telefoneContato"];
 		
 		$proprietarioControle = new Proprietario_Controle();
@@ -40,7 +41,7 @@
 	
 	function salvarEndereco(){
 		$endereco = new Endereco_Model();
-		$idCliente = $_POST["txtIdCliente"];
+		$idProprietario = $_POST["txtIdProprietario"];
 		$endereco->rua = $_POST["rua"];
 		$endereco->bairro= $_POST["bairro"];
 		$endereco->cidade = $_POST["cidade"];
@@ -48,22 +49,23 @@
 		$endereco->cep = $_POST["cep"];
 		$endereco->idEndereco = $_POST["txtIdEndereco"];
 	
-		$clienteControle = new Cliente_Controle();
-		$clienteControle->salvarEndCliente($idCliente,$endereco);
+		$proprietarioControle = new Proprietario_Controle();
+		$proprietarioControle->salvarEndProprietario($idProprietario,$endereco);
 	}
 	
 	function alterarProprietario(){
 		$proprietario = new Proprietario_Model();
 		$proprietario->idProprietario = $_POST["idProprietario"];
-		//$idEndereco = $_POST["txtIdEndereco"];
+		$idEndereco = $_POST["txtIdEndereco"];
 		$proprietario->nome = $_POST["nome"];
 		$proprietario->email= $_POST["emailProprietario"];
 		$proprietario->cpf = $_POST["cpf"];
+		$proprietario->rg = $_POST["rg"];
 		$proprietario->telefoneContato = $_POST["telefoneContato"];
 	
 		$proprietarioControle = new Proprietario_Controle();
-		//$proprietarioControle->alterarCliente($cliente,$idEndereco);
-		$proprietarioControle->alterarProprietario($proprietario);
+		$proprietarioControle->alterarProprietario($proprietario,$idEndereco);
+		//$proprietarioControle->alterarProprietario($proprietario);
 	}
 	
 	function excluirProprietario($idProprietario){	

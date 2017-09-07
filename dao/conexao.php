@@ -1,6 +1,6 @@
 <?php
 
-// Base de dados de conexão Ambiente
+// Base de dados de conexï¿½o Ambiente
 
 class conexao{
 	
@@ -14,8 +14,8 @@ class conexao{
 	}
 	public function conectar () {
 
-//configuração Open Shift
-// 		 $dbusername =  "adminudkGdl1";  // Mysql nome de usuário
+//configuraï¿½ï¿½o Open Shift
+// 		 $dbusername =  "adminudkGdl1";  // Mysql nome de usuï¿½rio
 // 		 $dbpassword =  "prAm4Es4dwzc";  // Mysql senha
 // 		 $conn = new PDO('mysql:host=127.10.128.2:3306;dbname=sgi', $dbusername, $dbpassword);
 // 		 if (!$conn) {
@@ -23,9 +23,10 @@ class conexao{
 // 		 	exit;
 // 		 };
 		 
-//configuração locahost
-		
-		 $dbusername =  "root";  // Mysql nome de usuário
+//configuraï¿½ï¿½o locahost
+		 //******************************************************************************************************************//
+		 //nao esquecer de usar o arquivo .httacess do php e adicionar a opÃ§Ã£o "AddDefaultCharset UTF-8" no servidor hostinger
+		 $dbusername =  "root";  // Mysql nome de usuï¿½rio
 		 $dbpassword =  "root";  // Mysql senha
 		 $conn = new PDO('mysql:host=127.0.0.1:3306;dbname=sgi', $dbusername, $dbpassword);
 		 if (!$conn) {

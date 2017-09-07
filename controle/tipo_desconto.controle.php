@@ -13,7 +13,7 @@
 			 $tipo   = base64_encode('UPD');
 			 $codigo = base64_encode($idTipoDesconto);
 			 
-			 if (!$ok)
+			 if ($idTipoDesconto == 0)
 			 {
 				echo 'Erro ao Salvar Tipo de Desconto';
 			 }

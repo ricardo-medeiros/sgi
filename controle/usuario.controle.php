@@ -1,5 +1,6 @@
 <?php
 	require_once(__ROOT__.'/modelo/usuario.model.php');
+	require_once(__ROOT__.'/modelo/usuario_documento.model.php');
 	require_once(__ROOT__.'/dao/daoUsuario.php');
 
 	class Usuario_Controle{	
@@ -31,6 +32,27 @@
 			$usuario = $daoUsuario->getUsuario($idUsuario);
 		
 			return $usuario;
+		}
+		
+		function listaDocsUsuario($idUsuario){
+			$daoUsuario = new daoUsuario();
+			$lista = $daoUsuario->listaDocumetoUsuario($idUsuario);
+		
+			return $lista;
+		}
+		
+		function getDocumentoUsuario($idUsuario,$idDocumento){
+			$daoUsuario = new daoUsuario();
+			$usuario_documento = $daoUsuario->getDocumetoUsuario($idUsuario, $idDocumento);
+		
+			return $usuario_documento;
+		}
+		
+		function getDocumentoUsuarioPorNome($idUsuario,$nomeDocumento){
+			$daoUsuario = new daoUsuario();
+			$usuario_documento = $daoUsuario->getDocumetoUsuarioPorNome($idUsuario, $nomeDocumento);
+		
+			return $usuario_documento;
 		}
 		
 		function alterarUsuario($usuario,$idEndereco){
@@ -100,6 +122,31 @@
 			$endereco = $daoUsuario->getEndUsuario($usuario);
 		
 			return $endereco;
+		}
+		
+		function salvarHTML($idDocumento,$idUsuario,$html){
+			$daoUsuario = new daoUsuario();
+			$codUsuario = base64_decode($idUsuario);
+			$usuario_documento = $daoUsuario->getDocumetoUsuario($codUsuario, $idDocumento);
+			$usuario_documento->documento = str_replace("&gt;",">",$html);
+			$daoUsuario->alterarDocumentoUsuario($usuario_documento);
+			header("Location: ../views/site/editarDocumento.php?idDocumento=$idDocumento&idUsuario=$codUsuario");
+// 			echo '<script type="text/javascript">';
+// 			echo 'function Fechar(){';
+// 			echo 'window.location.href = "../views/site/editarDocumento.php?idDocumento='.$idDocumento.'&idUsuario='.$codUsuario.'";}';
+// 			echo '</script>';
+				
+// 			echo '<link rel="stylesheet"	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">';
+// 			echo "<h4 style='color:red; text-align:center; font-weight: bold;'>Documento de Contrato Atualizado!</h4>";
+// 			echo '<center><button type="button" id="voltar" name="voltar" class="btn btn-success" value="Voltar" onClick="Fechar()">Voltar</button></center>';
+		}
+		
+		function restaurarHTML($idDocumento,$idUsuario){
+			$daoUsuario = new daoUsuario();
+			$codUsuario = $idUsuario;
+			$usuario_documento = $daoUsuario->getDocumetoUsuario($codUsuario, $idDocumento);
+			$daoUsuario->restaurarDocumentoUsuario($usuario_documento);
+			header("Location: ../views/site/editarDocumento.php?idDocumento=$idDocumento&idUsuario=$codUsuario");
 		}
 		
 		function getEstados(){

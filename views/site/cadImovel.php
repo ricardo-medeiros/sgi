@@ -7,7 +7,7 @@
 	
 	if ($ok){
 		echo "<script type='text/javascript' language='javascript'>
-				window.top.location.href = '/sgi/index.php';
+				window.top.location.href = '/index.php';
 			  </script>";
 	}
 	
@@ -20,6 +20,7 @@
 	$proprietario = new Proprietario_Model();
 	$estados = $controleImovel->getEstados();
 	$tiposImoveis = $controleImovel->getTipoImoveis();
+	$listaProprietario = $controleImovel->listaProprietarios();
 	if ($imovel->endereco > 0){
 		$endereco= $controleImovel->getEndImovel($imovel);
 	}
@@ -32,7 +33,7 @@
 <head>
 <title>Cadastro de Imovel</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta charset="utf-8" />
+<meta charset="iso-8859-1" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -99,6 +100,7 @@
 		document.getElementById('txtIdImovel').value = imovel;
 		document.getElementById('txtIdImovelProp').value = imovel;
 	}
+	
 	function Fechar(){
 		window.top.location.href = "imovel.php";
 	}
@@ -115,7 +117,7 @@
 		  <div class="panel-heading" style="text-align:center;">Cadastro de Imovel</div>
 		  	<div class="panel-body">
 		  		<div class="text-center">		  		
-				    <form action="/sgi/controle/implImovel.php" method="post" class="form-horizontal" data-toggle="validator" role="form" id="form">
+				    <form action="/controle/implImovel.php" method="post" class="form-horizontal" data-toggle="validator" role="form" id="form">
 							  <div class="form-group">							  
 							    <label for="cod" class="col-sm-2 control-label">Codigo</label>
 							    <div class="col-sm-2">
@@ -193,12 +195,12 @@
 									  </select>
 								  </div>
 						  	  </div>	
-						  	   <div class="form-group">
-							    <label for="valor" class="col-sm-2 control-label">Valor</label>
-							    <div class="col-sm-2">
-							      <input required  minlength="0" type="number" step="0.1" name="valor" class="form-control" id="txtValor" placeholder="Valor do Imovel" value="<?=$imovel->valor ?>"">
-							    </div>
-							  </div>			
+<!-- 						  	  <div class="form-group"> -->
+<!-- 							    <label for="valor" class="col-sm-2 control-label">Valor</label> -->
+<!-- 							    <div class="col-sm-2"> -->
+<!-- 							      <input required  minlength="0" type="number" step="0.1" name="valor" class="form-control" id="txtValor" placeholder="Valor do Imovel" value="<?=$imovel->valor ?>""> -->
+<!-- 							    </div> -->
+<!-- 							  </div>			 -->
 							  <div class="form-group">
 							    <label for="observacao" class="col-sm-2 control-label">Observacao</label>
 							    <div class="col-sm-8">
@@ -235,7 +237,7 @@
 		aria-labelledby="modalLabel" style="margin-top: 80px;">
 		<div class="modal-dialog modal-sm" role="document" style="width:800px;">
 			<div class="modal-content">
-				<form action="/sgi/controle/implImovel.php" method="POST" id="form2" class="form-horizontal" data-toggle="validator" role="form">
+				<form action="/controle/implImovel.php" method="POST" id="form2" class="form-horizontal" data-toggle="validator" role="form">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal"
 							aria-label="Fechar">
@@ -316,7 +318,7 @@
 		aria-labelledby="modalLabel" style="margin-top: 80px;">
 		<div class="modal-dialog modal-sm" role="document" style="width:800px;">
 			<div class="modal-content">
-				<form action="/sgi/controle/implImovel.php" method="POST" id="form2" class="form-horizontal" data-toggle="validator" role="form">
+				<form action="/controle/implImovel.php" method="POST" id="form2" class="form-horizontal" data-toggle="validator" role="form">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal"
 							aria-label="Fechar">
@@ -324,14 +326,15 @@
 						</button>
 						<h4 class="modal-title" id="modalLabel">Proprietario do Imovel</h4>
 					</div>
+				    <input type="hidden" name="txtIdImovelProp" id="txtIdImovelProp">
+				    <input type="hidden" name="txtIdEndereco" value="<?=$endereco->idEndereco ?>" id="txtIdEndereco" >					
+				<?php if ($proprietario->idProprietario != null) {?>
 					<div class="modal-body">				
 						 <div class="form-group">
 						    <label for="cod" class="col-sm-2 control-label">Codigo</label>
 						    <div class="col-sm-2">
 						      <input type="text" name="idProprietario" value="<?=$proprietario->idProprietario ?>" class="form-control" id="idProprietario" placeholder="" disabled>
 						      <input type="hidden" name="txtIdProprietario" value="<?=$proprietario->idProprietario ?>" id="txtIdProprietario" >
-						      <input type="hidden" name="txtIdImovelProp" id="txtIdImovelProp">
-						      <input type="hidden" name="txtIdEndereco" value="<?=$endereco->idEndereco ?>" id="txtIdEndereco" >
 						    </div>
 						 </div>		
 					 	 <div class="form-group">
@@ -340,7 +343,13 @@
 						      <input required maxlength="11" minlength="11" type="text" name="cpf" class="form-control" id="txtCpf" placeholder="CPF" value="<?=$proprietario->cpf ?>">
 						    </div>
 						    <span id="erroMsgCpf" style="text-align: left;color: red; display: none;">CPF já existe, favor informar outro CPF!</span>
-						  </div>						  
+						  </div>		
+						  <div class="form-group">
+							    <label for="rgProprietario" class="col-sm-2 control-label">RG</label>
+							    <div class="col-sm-2">
+							      <input required maxlength="11" minlength="8" type="text" name="rg" class="form-control" id="txtRg" placeholder="RG" value="<?=$proprietario->rg ?>">
+							    </div>
+						  </div>					  
 						  <div class="form-group">
 						    <label for="nomeProprietario" class="col-sm-2 control-label">Nome</label>
 						    <div class="col-sm-8">
@@ -361,10 +370,98 @@
 						    </div>
 						  </div>					  			  	
 					</div>
+				 <?php } else {?>
+				 	<div class="modal-body">
+					 	 <div class="form-group">
+								<label for="listaProprietario" class="col-sm-2 control-label">Proprietario</label>
+								<div class="col-sm-8">
+									<select required name="opcaoProprietario" class="form-control" id="cbxOpcaoProprietario"
+										placeholder="Proprietarios" value="" >		
+											<option value="">Selecione um Proprietario</option>
+										 <?php foreach ((array)$listaProprietario as $proprietario) { ?>
+											<option value="<?=$proprietario->idProprietario ?>"><?=$proprietario->cpf . " - " . $proprietario->nome ?></option>
+										 <?php }?>	 							 								 
+									</select>
+								</div>
+								<div class="col-sm-1">					      
+							      <a href="#" id="novoModal" data-toggle="modal" data-target="#novoProprietario-modal">
+							      		<button type="button" onclick="Imovel(<?=$imovel->idImovel ?>)" class="btn btn-primary" data-dismiss="modal">
+								      			<span class="glyphicon glyphicon-user" aria-hidden="true"></span> Novo							      		
+								      	</button>
+							      </a>
+							     </div>
+						 </div> 	
+					</div>
+				 <?php }?>	
 					<div class="modal-footer">
-					   <?php if ($tipo == 'INS') {?>
-							<button type="submit" class="btn btn-success" name="salvarEndereco" id="salvarEndereco" value="Salvar">Salvar</button>
+					   <?php if ($tipo == 'UPD') {?>
+					    	<button type="submit" id="salvarProp" name="salvarProp" class="btn btn-success" value="Salvar">Salvar</button>
 					   <?php }?>
+							<button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>	
+	
+	<!-- Novo Modal Proprietario-->
+	<div class="modal fade" id="novoProprietario-modal" tabindex="-1" role="dialog" 
+		aria-labelledby="modalLabel" style="margin-top: 80px;">
+		<div class="modal-dialog modal-sm" role="document" style="width:800px;">
+			<div class="modal-content">
+				<form action="/controle/implImovel.php" method="POST" id="form3" class="form-horizontal" data-toggle="validator" role="form">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Fechar">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<h4 class="modal-title" id="modalLabel">Proprietario do Imovel</h4>
+					</div>
+					<div class="modal-body">				
+						 <div class="form-group">
+						    <label for="cod" class="col-sm-2 control-label">Codigo</label>
+						    <div class="col-sm-2">
+						      <input type="text" name="idProprietario" value="" class="form-control" id="idProprietario" placeholder="" disabled>
+						      <input type="hidden" name="txtIdProprietario" value="" id="txtIdProprietario" >
+						      <input type="hidden" name="txtIdImovelProp" id="txtIdImovelProp">
+						      <input type="hidden" name="txtIdEndereco" value="<?=$endereco->idEndereco ?>" id="txtIdEndereco" >
+						    </div>
+						 </div>		
+					 	 <div class="form-group">
+						    <label for="cpfProprietario" class="col-sm-2 control-label">CPF</label>
+						    <div class="col-sm-4">
+						      <input required maxlength="11" minlength="11" type="text" name="cpf" class="form-control" id="txtCpf" placeholder="CPF" value="">
+						    </div>
+						    <span id="erroMsgCpf" style="text-align: left;color: red; display: none;">CPF já existe, favor informar outro CPF!</span>
+						  </div>				
+						  <div class="form-group">
+							    <label for="rgProprietario" class="col-sm-2 control-label">RG</label>
+							    <div class="col-sm-2">
+							      <input required maxlength="11" minlength="8" type="text" name="rg" class="form-control" id="txtRg" placeholder="RG" value="">
+							    </div>
+						  </div>			  
+						  <div class="form-group">
+						    <label for="nomeProprietario" class="col-sm-2 control-label">Nome</label>
+						    <div class="col-sm-8">
+						      <input required maxlength="150" minlength="10" type="text" name="nome" class="form-control" id="txtProprietario" placeholder="Nome" value="">
+						    </div>
+						  </div>			  		
+						  <div class="form-group">
+						    <label for="emailProprietario" class="col-sm-2 control-label">E-mail</label>
+						    <div class="col-sm-6">
+						      <input required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" type="email" name="emailProprietario" class="form-control" id="txtEmail" placeholder="E-mail" value="">
+						    </div>
+						    <!-- <span id="erroMsg" style="text-align: left;color: red; display: none;">Login já existe, favor informar outro login!</span> -->
+						  </div>				  
+					  	  <div class="form-group">
+						    <label for="telefoneCel" class="col-sm-2 control-label">Celular</label>
+						    <div class="col-sm-4">
+						      <input required maxlength="10" minlength="10" type="text" name="telefoneContato"  class="form-control" id="txtCelular" placeholder="Tel. Celular" value="">
+						    </div>
+						  </div>					  			  	
+					</div>	
+					<div class="modal-footer">
 					   <?php if ($tipo == 'UPD') {?>
 					    	<button type="submit" id="salvarProp" name="salvarProp" class="btn btn-success" value="Salvar">Salvar</button>
 					   <?php }?>

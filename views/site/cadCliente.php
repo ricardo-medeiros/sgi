@@ -7,7 +7,7 @@
 	
 	if ($ok){
 		echo "<script type='text/javascript' language='javascript'>
-				window.top.location.href = '/sgi/index.php';
+				window.top.location.href = '/index.php';
 			  </script>";
 	}
 	
@@ -28,7 +28,7 @@
 <head>
 <title>Cadastro de Cliente</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta charset="utf-8" />
+<meta charset="iso-8859-1" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -37,7 +37,7 @@
 <script type="text/javascript" language="javascript">
 	$(document).ready(function(){
 		function limpa_formulario_cep() {
-	    // Limpa valores do formulário de cep.
+	    // Limpa valores do formulï¿½rio de cep.
 	    $("#txtRua").val("");
 	    $("#txtBairro").val("");
 	    $("#txtCidade").val("");
@@ -49,7 +49,7 @@
 			var cep = $(this).val().replace(/\D/g, '');
 			
 			if (cep != "") {     			
-	 		   //Expressão regular para validar o CEP.
+	 		   //Expressï¿½o regular para validar o CEP.
 	           var validacep = /^[0-9]{8}$/;
 	
 	         //Valida o formato do CEP.
@@ -72,20 +72,20 @@
 	                     $("#txtCep").val(dados.cep);
 	                 } //end if.
 	                else {
-	                    //CEP pesquisado não foi encontrado.
+	                    //CEP pesquisado nï¿½o foi encontrado.
 	                    //limpa_formulario_cep();
 	                    alert("CEP nao encontrado.");
 	                }
 	             });
 	        } //end if.
 	          else {
-	              //cep é inválido.
+	              //cep ï¿½ invï¿½lido.
 	              limpa_formulario_cep();
-	              alert("Formato de CEP inválido.");
+	              alert("Formato de CEP invï¿½lido.");
 	          }
 	     } //end if.
 	      else {
-	          //cep sem valor, limpa formulário.
+	          //cep sem valor, limpa formulï¿½rio.
 	          limpa_formulario_cep();
 	      }
 		});
@@ -109,8 +109,7 @@
 		  <div class="panel-heading" style="text-align:center;">Cadastro de Cliente</div>
 		  	<div class="panel-body">
 		  		<div class="text-center">		  		
-				    <!-- <form action="/sgi/controle/implCliente.php" method="post" class="form-horizontal" data-toggle="validator" role="form" id="form"> -->
-				    <form action="/sgi/controle/implCliente.php" method="post" class="form-horizontal" data-toggle="validator" role="form" id="form">
+				    <form action="/controle/implCliente.php" method="post" class="form-horizontal" data-toggle="validator" role="form" id="form">
 							  <div class="form-group">							  
 							    <label for="cod" class="col-sm-2 control-label">Codigo</label>
 							    <div class="col-sm-2">
@@ -132,7 +131,7 @@
 							    <div class="col-sm-2">
 							      <input required maxlength="11" minlength="11" type="text" name="cpf" class="form-control" id="txtCpf" placeholder="CPF" value="<?=$cliente->cpf ?>">
 							    </div>
-							    <span id="erroMsgCpf" style="text-align: left;color: red; display: none;">CPF já existe, favor informar outro CPF!</span>
+							    <span id="erroMsgCpf" style="text-align: left;color: red; display: none;">CPF jï¿½ existe, favor informar outro CPF!</span>
 							  </div>					
 							  <div class="form-group">
 							    <label for="rgCliente" class="col-sm-2 control-label">RG</label>
@@ -151,7 +150,7 @@
 							    <div class="col-sm-4">
 							      <input required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" type="email" name="emailCliente" class="form-control" id="txtEmail" placeholder="E-mail" value="<?=$cliente->email ?>">
 							    </div>
-							    <!-- <span id="erroMsg" style="text-align: left;color: red; display: none;">Login já existe, favor informar outro login!</span> -->
+							    <!-- <span id="erroMsg" style="text-align: left;color: red; display: none;">Login jï¿½ existe, favor informar outro login!</span> -->
 							  </div>				  
 						  	  <div class="form-group">
 							    <label for="telefoneCel" class="col-sm-2 control-label">Celular</label>
@@ -215,7 +214,7 @@
 		aria-labelledby="modalLabel" style="margin-top: 80px;">
 		<div class="modal-dialog modal-sm" role="document" style="width:800px;">
 			<div class="modal-content">
-				<form action="/sgi/controle/implCliente.php" method="POST" id="form2" class="form-horizontal" data-toggle="validator" role="form">
+				<form action="/controle/implCliente.php" method="POST" id="form2" class="form-horizontal" data-toggle="validator" role="form">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal"
 							aria-label="Fechar">

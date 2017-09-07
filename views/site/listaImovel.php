@@ -8,7 +8,7 @@
 <html lang="en">
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta charset="utf-8" />
+<meta charset="iso-8859-1" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Lista de Imoveis</title>
 <!-- <link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon"></link> -->
@@ -38,7 +38,7 @@
 	}
 	
 	function redirecionaModal(imovel){
-		location.href='/sgi/controle/implImovel.php?tipo=DLT&idImovel='+imovel;
+		location.href='/controle/implImovel.php?tipo=DLT&idImovel='+imovel;
 	}
 </script>
 </head>
@@ -61,9 +61,10 @@
 								<th width="10px"></th>
 								<th width="10px"></th>							
 								<th width="40px">Codigo</th>
-								<th width="130px">Tipo</th>
-								<th width="150px">Situacao</th>
-								<th width="150px">Valor</th>
+								<th width="60px">Tipo</th>
+								<th width="60px">Situacao</th>
+<!-- 								<th width="600px">Valor</th> -->
+								<th width="300px">Observacao</th>
 							</tr>
 						</thead>
 
@@ -95,7 +96,8 @@
 									<?php if ($imovel->situacao == 'O'){$imovel->situacao = 'Ocupado';?>
 										<td><?php echo $imovel->situacao ?></td>
 									<?php }?>
-									<td><?php echo $imovel->valor ?></td>								
+									<!-- <td><?php echo $imovel->valor ?></td> -->
+									<td><?php echo $imovel->observacao ?></td>										
 								</tr>		
 						<?php
 						}

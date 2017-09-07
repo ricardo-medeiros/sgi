@@ -3,7 +3,7 @@
 <head>
 <title>SGI-WEB</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-<meta charset="utf-8"/>
+<meta charset="iso-8859-1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!--   <link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon"></link> -->
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">

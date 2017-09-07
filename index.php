@@ -77,7 +77,7 @@ if (isset ( $_SESSION ["erroLogin"] )) {
 			</div>
 		</nav>
 	</div>
-	<center>
+	<div align="center">
 		<div id="myCarousel" class="carousel slide" data-ride="carousel"
 			style="width: 70%;">
 			<!-- Indicators -->
@@ -96,7 +96,7 @@ if (isset ( $_SESSION ["erroLogin"] )) {
 								Tenha de forma organizada todos seus registros. Controle todo seu fluxo imobiliario.
 								Um sistema simples e objetivo para facilitar e modernizar sua estrutura de trabalho.<br/>
 								Sem taxa de adesao, somente pagamento mensal. <h3>R$ 50,00</h3>								
-							<p>
+ 							<p>
 								<a class="btn btn-lg btn-warning" href="#" role="button">Contratar</a>
 							</p>
 						</div>
@@ -110,7 +110,7 @@ if (isset ( $_SESSION ["erroLogin"] )) {
 								O Sistema SGI apresenta de forma descomplicada todos seus dados financeiros, 
 								e ainda possiblita a visualizacao em graficos para acompanhamento. <br/> 
 								<h3>Gereciamento facil!</h3>
-							</p>
+							
 							<p>
 								<a class="btn btn-lg btn-warning" href="#" role="button">Saiba
 									Mais</a>
@@ -126,7 +126,7 @@ if (isset ( $_SESSION ["erroLogin"] )) {
 								Recibos e contratos com o seu proprio logotipo.<br/>
 								Relatorios de clientes, imoveis, contas a pagar, contas a receber.<br/>
 								<h3>Mapeamento de todos seus registros.</h3>
-							</p>
+							
 							<p>
 								<a class="btn btn-lg btn-warning" href="#" role="button">Saiba
 									Mais</a>
@@ -160,9 +160,9 @@ if (isset ( $_SESSION ["erroLogin"] )) {
 	          <h3>Seguranca</h3>
 	          <p>Suas informacoes de perfil e seus dados cadastrais de clientes, proprietario e imoveis, estarao disponiveis somente para o usuario logado. </p>
 	        </div>
-	      </div>		
-	      
-	</center>
+	      </div>			      
+		</div>
+	</div>
 	<div id="rodape"
 		style="position: fixed; bottom: 0; width: 100%; font-weight: bold; background-color: black;">
 		 <?php

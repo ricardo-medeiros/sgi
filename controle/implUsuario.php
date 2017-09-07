@@ -5,6 +5,7 @@
 	require_once(__ROOT__.'/controle/usuario.controle.php');
 	define('UPLOAD_DIR',dirname(dirname(__FILE__))."\\views\\logo\\");
 	
+	
 	if(isset($_POST["salvar"]) == 'Salvar'){
 		salvarUsuario();
 	}
@@ -23,13 +24,33 @@
 		excluirUsuario($idUsuario);
 	}
 	
+	if(isset($_POST["salvarHTML"]) == 'Atualizar')
+	{
+		$idDocumento = $_POST["idDocumento"];
+		$idUsuario = $_POST["idUsuario"];
+		$html   = $_POST["htmlAtual"];
+		atualizaHtmlContrato($idDocumento,$idUsuario,$html);
+	}
 	
+	if(isset($_POST["restaurarHTML"]) == 'Sim')
+	{
+		$idDocumento = $_POST["idDocumentoR"];
+		$idUsuario = $_POST["idUsuarioR"];
+		restaurarHtmlContrato($idDocumento,$idUsuario);
+	}
+
 	function salvarUsuario(){
 		$usuario = new Usuario_Model();
 		$usuario->nome = $_POST["nome"];
 		$usuario->login= $_POST["login"];
 		$usuario->cpf = $_POST["cpf"];
 		$usuario->status = $_POST["status"];
+		$usuario->banco= $_POST["banco"];
+		$usuario->agencia= $_POST["agencia"];
+		$usuario->conta= $_POST["conta"];	
+		$usuario->tipoConta= $_POST["tipoConta"];
+		$usuario->numeroCRA= $_POST["numeroCRA"];
+		$usuario->numeroCRECI= $_POST["numeroCRECI"];
 		$usuario->senha = $_POST["senha"];
 		$usuario->telefoneContato = $_POST["telefoneCelular"];
 		$usuario->caminhoLogo = $_POST["caminhoLogo"];
@@ -60,8 +81,15 @@
 		//$usuario->login= $_POST["login"];
 		$usuario->cpf = $_POST["cpf"];
 		//$usuario->status = $_POST["status"];
+		$usuario->banco= $_POST["banco"];
+		$usuario->agencia= $_POST["agencia"];
+		$usuario->conta= $_POST["conta"];
+		$usuario->tipoConta= $_POST["tipoConta"];
+		$usuario->numeroCRA= $_POST["numeroCRA"];
+		$usuario->numeroCRECI= $_POST["numeroCRECI"];
 		$usuario->senha = $_POST["senha"];
 		$usuario->telefoneContato = $_POST["telefoneCelular"];
+		$logo = $_POST["txtLogotipo"];
 				
 		if($_FILES['caminhoLogo']['name'])
 		{
@@ -79,7 +107,13 @@
 		}		
 		else 
 		{
-			$usuario->caminhoLogo = "../logo/logoVazia.png";
+			if($logo == ''){
+				$usuario->caminhoLogo = "../logo/logoVazia.png";
+			}
+			else
+			{
+				$usuario->caminhoLogo = $logo;
+			}
 		}
 		
 		
@@ -90,5 +124,15 @@
 	function excluirUsuario($idUsuario){	
 		$usuarioControle = new Usuario_Controle();
 		$usuarioControle->excluirUsuario($idUsuario);
+	}
+	
+	function atualizaHtmlContrato($idDocumento,$idUsuario,$html){
+		$usuarioControle = new Usuario_Controle();
+		$usuarioControle->salvarHTML($idDocumento,$idUsuario,$html);
+	}
+	
+	function restaurarHtmlContrato($idDocumento,$idUsuario){
+		$usuarioControle = new Usuario_Controle();
+		$usuarioControle->restaurarHTML($idDocumento,$idUsuario);
 	}
 ?>

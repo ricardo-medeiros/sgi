@@ -62,21 +62,46 @@
 	function salvarProprietario(){
 		$proprietario = new Proprietario_Model();
 		$idImovel = $_POST["txtIdImovelProp"];
-		$proprietario->nome = $_POST["nome"];
-		$proprietario->cpf= $_POST["cpf"];
-		$proprietario->telefoneContato = $_POST["telefoneContato"];
-		$proprietario->email = $_POST["emailProprietario"];
-		$proprietario->idProprietario = $_POST["txtIdProprietario"];
-		$idEndereco = $_POST["txtIdEndereco"];
-	
 		$imovelControle = new Imovel_Controle();
-		$imovelControle->salvarPropImovel($idImovel, $idEndereco,$proprietario);
+		
+		if ($_POST["txtIdEndereco"] == '')
+		{
+			$idEndereco = 0;
+		}
+		else {
+		
+			$idEndereco = $_POST["txtIdEndereco"];
+		}
+		
+		if (isset($_REQUEST["opcaoProprietario"]) != "")
+		{
+			$imovel = $imovelControle->getImovel($idImovel);
+			$idProprietario = $_POST["opcaoProprietario"];
+			$proprietario = $imovelControle->alterarImovel($imovel,$idEndereco,$idProprietario);
+		}
+		else 
+		{
+			$proprietario->nome = $_POST["nome"];
+			$proprietario->cpf= $_POST["cpf"];
+			$proprietario->rg= $_POST["rg"];
+			$proprietario->telefoneContato = $_POST["telefoneContato"];
+			$proprietario->email = $_POST["emailProprietario"];
+			$proprietario->idProprietario = $_POST["txtIdProprietario"];
+			$imovelControle->salvarPropImovel($idImovel, $idEndereco,$proprietario);
+		}
 	}
 	
 	function alterarImovel(){
 		$imovel = new Imovel_Model();
 		$imovel->idImovel = $_POST["idImovel"];
-		$idEndereco = $_POST["txtIdEndereco"];
+		if ($_POST["txtIdEndereco"] == '')
+		{
+			$idEndereco = 0;
+		}
+		else {
+		
+			$idEndereco = $_POST["txtIdEndereco"];
+		}
 		$idProprietario = $_POST["txtIdProprietario"];
 		$imovel->tipo = $_POST["tipoImovel"];
 		//$imovel->situacao= $_POST["situacao"];

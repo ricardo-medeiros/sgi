@@ -25,6 +25,7 @@
 	function salvarTipoDesconto(){
 		$tipoDesconto = new Tipo_Desconto_Model();
 		$tipoDesconto->descDesconto = $_POST["descDesconto"];
+		$tipoDesconto->tipo = $_POST["tipoDesc"];
 		
 		$tipoDescontoControle = new Tipo_Desconto_Controle();
 		$tipoDescontoControle->salvarTipoDesconto($tipoDesconto);
@@ -35,6 +36,7 @@
 		$tipoDesconto = new Tipo_Desconto_Model();
 		$tipoDesconto->descDesconto = $_POST["descDesconto"];
 		$tipoDesconto->idTipoDesconto = $_POST["idTipoDesconto"];
+		$tipoDesconto->tipo = $_POST["tipoDesc"];
 	
 		$tipoDescontoControle = new Tipo_Desconto_Controle();
 		$tipoDescontoControle->alterarTipoDesconto($tipoDesconto);

@@ -3,11 +3,13 @@
 class Proprietario_Model{
 	
 	public $idProprietario;
-	public $cpf;
+	public $cpf; //cpf ou cnpj
+	public $rg;
 	public $nome;
 	public $telefoneContato;
 	public $email;
 	public $usuario;
+	public $endereco;
 		
 	public function setIdProprietario($idProprietario){
 		$this->idProprietario = $idProprietario;
@@ -15,6 +17,10 @@ class Proprietario_Model{
 
 	public function setCpf($cpf){
 		$this->cpf = $cpf;
+	}
+	
+	public function setRg($rg){
+		$this->rg = $rg;
 	}
 
 	public function setNome($nome){
@@ -33,12 +39,20 @@ class Proprietario_Model{
 		$this->usuario = $usuario;	
 	}
 	
+	public function setEndereco($endereco){
+		$this->endereco = $endereco;
+	}
+	
 	public function getIdProprietario(){
 		return $this->idProprietario;
 	}
 
 	public function getCpf(){
 		return $this->cpf;
+	}
+	
+	public function getRg(){
+		return $this->rg;
 	}
 	
 	public function getNome(){
@@ -55,6 +69,10 @@ class Proprietario_Model{
 	
 	public function getUsuario(){
 		return $this->usuario;
+	}
+	
+	public function getEndereco(){
+		return $this->enderecp;
 	}
 }
 

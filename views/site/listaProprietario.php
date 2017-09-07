@@ -8,7 +8,7 @@
 <html lang="en">
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta charset="utf-8" />
+<meta charset="iso-8859-1" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Lista de Proprietario</title>
 <!-- <link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon"></link> -->
@@ -38,7 +38,7 @@
 	}
 	
 	function redirecionaModal(proprietario){
-		location.href='/sgi/controle/implProprietario.php?tipo=DLT&idProprietario='+proprietario;
+		location.href='/controle/implProprietario.php?tipo=DLT&idProprietario='+proprietario;
 	}
 </script>
 </head>

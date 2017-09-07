@@ -9,6 +9,12 @@ class Usuario_Model{
 	public $login;
 	public $senha;
 	public $status;
+	public $banco;
+	public $agencia;
+	public $conta;
+	public $tipoConta; //poupança ou corrente
+	public $numeroCRA;
+	public $numeroCRECI;
 	public $caminhoLogo;
 	public $endereco;
 
@@ -39,6 +45,30 @@ class Usuario_Model{
 	
 	public function setStatus($status){
 		$this->status = $status;
+	}
+	
+	public function setBanco($banco){
+		$this->banco = $banco;
+	}
+	
+	public function setAgencia($agencia){
+		$this->agencia = $agencia;
+	}
+	
+	public function setTipoConta($tipoConta){
+		$this->tipoConta = $tipoConta;
+	}
+	
+	public function setNumeroCRA($numeroCRA){
+		$this->numeroCRA = $numeroCRA;
+	}
+	
+	public function setNumeroCRECI($numeroCRECI){
+		$this->numeroCRECI = $numeroCRECI;
+	}
+	
+	public function setConta($conta){
+		$this->conta = $conta;
 	}
 	
 	public function setCaminhoLogo($caminhoLogo){
@@ -75,6 +105,30 @@ class Usuario_Model{
 	
 	public function getStatus(){
 		return $this->status;
+	}
+	
+	public function getBanco(){
+		return $this->banco;
+	}
+	
+	public function getAgencia(){
+		return $this->agencia;
+	}
+	
+	public function getTipoConta(){
+		return $this->tipoConta;
+	}
+	
+	public function getNumeroCRA(){
+		return $this->numeroCRA;
+	}
+	
+	public function getNumeroCRECI(){
+		return $this->numeroCRECI;
+	}
+	
+	public function getConta(){
+		return $this->conta;
 	}
 	
 	public function getCaminhoLogo(){

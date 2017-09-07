@@ -1,6 +1,6 @@
 <?php
 	require_once(__ROOT__.'/modelo/proprietario.model.php');
-	//require_once(__ROOT__.'/modelo/endereco.model.php');
+	require_once(__ROOT__.'/modelo/endereco.model.php');
 	require_once(__ROOT__.'/dao/daoProprietario.php');
 
 	
@@ -28,35 +28,35 @@
 			 }
 			 //header("Location:http://localhost:90/sgi/index.php"); //exemplo de redirecti
 		}
-		/*
-		function salvarEndCliente($idCliente,$endereco)
+		
+		function salvarEndProprietario($idProprietario,$endereco)
 		{			
-			$daoCliente = new daoCliente();
+			$daoProprietario = new daoProprietario();
 			$ok =  false;
 			if ($endereco->idEndereco > 0){
-				$ok = $daoCliente->alterarEndCliente($endereco);					
+				$ok = $daoProprietario->alterarEndProprietario($endereco);					
 			}
 			else {				
-				$idEndereco = $daoCliente->salvarEndCliente($endereco);	
-				$cliente = $daoCliente->getCliente($idCliente);					
-				$ok = $daoCliente->alterarCliente($cliente,$idEndereco);							
+				$idEndereco = $daoProprietario->salvarEndProprietario($endereco);	
+				$proprietario = $daoProprietario->getProprietario($idProprietario);					
+				$ok = $daoProprietario->alterarProprietario($proprietario,$idEndereco);							
 			}			
 			
 			$tipo   = base64_encode('UPD');
-			$codigo = base64_encode($idCliente);
+			$codigo = base64_encode($idProprietario);
 			if (!$ok)
 			{
-				echo 'Erro ao Alterar Cliente';
+				echo 'Erro ao Alterar Proprietario';
 			}
 			else
 			{
 				//echo 'Cliente Salvo com Sucesso';
 				//echo "<script language='JavaScript'> window.parent.document.getElementById('resultado').innerHTML = 'Cliente Salvo com Sucesso';</script>";
-				header("Location: ../views/site/cadCliente.php?tipo=".$tipo."&idCliente=".$codigo);
+				header("Location: ../views/site/cadProprietario.php?tipo=".$tipo."&idProprietario=".$codigo);
 			}
 			
 		}
-		*/
+		
 		function listaProprietario(){
 			$daoProprietario = new daoProprietario();
 			$lista = $daoProprietario->listaProprietario(); 
@@ -68,20 +68,20 @@
 			$proprietario = $daoProprietario->getProprietario($idProprietario);
 			return $proprietario;
 		}
-		/*		
-		function getEndCliente($cliente){
-			$daoCliente = new daoCliente();
-			$endereco = $daoCliente->getEndCliente($cliente);
+				
+		function getEndProprietario($proprietario){
+			$daoProprietario = new daoProprietario();
+			$endereco = $daoProprietario->getEndProprietario($proprietario);
 		
 			return $endereco;
 		}
-		*/
+				
 		//function alterarCliente($cliente,$idEndereco){
-		function alterarProprietario($proprietario){
+		function alterarProprietario($proprietario,$idEndereco){
 			$daoProprietario = new daoProprietario();
 			$idProprietario = $proprietario->idProprietario;
 			//$ok = $daoProprietario->alterarProprietario($proprietario,$idEndereco);
-			$ok = $daoProprietario->alterarProprietario($proprietario);
+			$ok = $daoProprietario->alterarProprietario($proprietario,$idEndereco);
 		
 			$tipo   = base64_encode('UPD');
 			$codigo = base64_encode($idProprietario);
